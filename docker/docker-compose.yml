@@ -11,7 +11,7 @@ services:
       - 3306:3306
     volumes:
       - ../mariadb/data:/var/lib/mysql
-      - ../mariadb/conf:/etc/mysql
+      - ../mariadb/conf/mariadb.cnf:/etc/mysql/my.cnf
     env_file:
       - ../.env
     environment:
