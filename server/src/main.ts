@@ -6,10 +6,9 @@ import { AppModule } from './app.module';
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const config = new DocumentBuilder()
-    .setTitle('Cats exmaple')
-    .setDescription('The cats API descrpition')
+    .setTitle(process.env.SWAGGER_TITLE)
+    .setDescription(process.env.SWAGGER_DESCRIPTION)
     .setVersion('1.0')
-    .addTag('cats')
     .build();
   const document = SwaggerModule.createDocument(app, config);
   SwaggerModule.setup('api/docs', app, document);
