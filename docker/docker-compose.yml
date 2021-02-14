@@ -24,7 +24,7 @@ services:
     container_name: boilerplate_nestjs
     build:
       context: ../
-      dockerfile: ./docker/Dockerfile.server
+      dockerfile: ./docker/Dockerfile.dev
     restart: always
     depends_on:
       - mariadb

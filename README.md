@@ -25,18 +25,26 @@ Docker version 19.03.13, build 4484c46d9d
 docker-compose version 1.26.2, build eefe0d31
 ```
 
-### 실행 스크립트
+### 실행 및 종료
 
-db 폴더 생성, 접근을 위해 root 권한 필요
+시작 전 로컬의 node_modules와 컨테이너의 node_modules의
+볼륨 마운트를 위해 모듈 설치
 
 ```
-sudo ./run.sh
+> npm install
+```
+
+스크립트 실행
+
+```
+> sudo chmod +x ./run.sh
+> sudo ./run.sh
 ```
 
 종료 스크립트
 
 ```
-./stop.sh
+> ./stop.sh
 ```
 
 ## Swagger Api Documentation
