@@ -2,6 +2,7 @@ version: "3.2"
 
 services:
   nestjs:
+    container_name: nextjs_nestjs_boilerplate_nestjs
     build:
       context: ../server
       dockerfile: ../docker/Dockerfile.server
