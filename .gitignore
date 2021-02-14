@@ -10,6 +10,9 @@ yarn-debug.log*
 yarn-error.log*
 lerna-debug.log*
 
+# DB
+mariadb/data
+
 # OS
 .DS_Store
 

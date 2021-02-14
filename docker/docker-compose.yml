@@ -1,6 +1,23 @@
 version: "3.2"
 
 services:
+  mariadb:
+    image: mariadb:10.5.8
+    container_name: boilerplate_mariadb
+    restart: always
+    networks:
+      - app-network
+    ports:
+      - 3306:3306
+    volumes:
+      - ../mariadb/data:/var/lib/mysql
+      - ../mariadb/conf:/etc/mysql
+    env_file:
+      - ../.env
+    environment:
+      MYSQL_ROOT_PASSWORD: test
+      TZ: ${MARIADB_TIME_ZONE}
+
   nestjs:
     image: boilerplate_nestjs
     container_name: boilerplate_nestjs
@@ -8,6 +25,8 @@ services:
       context: ../server
       dockerfile: ../docker/Dockerfile.server
     restart: always
+    depends_on:
+      - mariadb
     networks:
       - app-network
     volumes:
