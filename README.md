@@ -1,6 +1,6 @@
 # NestJS Boilerplate
 
-도커, 도커 컴포즈로 구성된 NestJs 기반의 보일러플레이트
+NestJs, Docker, MariaDB로 구성된 NestJs Boilerplate
 
 ## 기술 스택
 
@@ -38,7 +38,7 @@ docker-compose version 1.26.2, build eefe0d31
 
 ```
 > sudo chmod +x ./run.sh
-> sudo ./run.sh
+> ./run.sh
 ```
 
 종료 스크립트
