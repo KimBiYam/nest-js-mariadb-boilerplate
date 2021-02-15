@@ -2,9 +2,9 @@ import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
 @Index(['id'], { unique: true })
-@Unique(['userId'])
+@Unique(['userId', 'email'])
 export class User {
-  @PrimaryGeneratedColumn()
+  @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
   @Column()
@@ -18,6 +18,9 @@ export class User {
 
   @Column()
   password: string;
+
+  @Column({ type: 'date', default: () => 'NOW()' })
+  created: Date;
 
   @Column({ default: true })
   isActive: boolean;
