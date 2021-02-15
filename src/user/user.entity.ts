@@ -1,3 +1,4 @@
+import { PasswordTransformer } from 'src/util/password.transformer';
 import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
@@ -16,7 +17,7 @@ export class User {
   @Column()
   email: string;
 
-  @Column()
+  @Column({ transformer: new PasswordTransformer() })
   password: string;
 
   @Column({ type: 'datetime', default: () => 'NOW()' })

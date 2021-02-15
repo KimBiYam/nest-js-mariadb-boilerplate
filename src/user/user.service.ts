@@ -13,31 +13,36 @@ export class UserService {
   ) {}
 
   async findAll(): Promise<User[]> {
-    return await this.userRepository.find();
+    return await this.userRepository.find({
+      select: ['userId', 'name', 'email', 'isActive', 'created'],
+    });
   }
 
   async create(createUserDto: CreateUserDto): Promise<any> {
     return await this.userRepository.save(createUserDto);
   }
 
-  async findOne(id: number): Promise<User> {
-    const user = await this.userRepository.findOne(id);
+  async findOne(userId: string): Promise<User> {
+    const user = await this.userRepository.findOne({
+      select: ['userId', 'name', 'email', 'isActive', 'created'],
+      where: { userId },
+    });
     if (user === undefined) {
-      throw new NotFoundException(`userId ${id} is not found`);
+      throw new NotFoundException(`userId ${userId} is not found`);
     }
     return user;
   }
 
-  async remove(id: number): Promise<DeleteResult> {
-    await this.findOne(id);
-    return await this.userRepository.delete(id);
+  async remove(userId: string): Promise<DeleteResult> {
+    await this.findOne(userId);
+    return await this.userRepository.delete(userId);
   }
 
   async update(
-    id: number,
+    userId: string,
     updateUserDto: UpdateUserDto,
   ): Promise<UpdateResult> {
-    await this.findOne(id);
-    return await this.userRepository.update(id, updateUserDto);
+    await this.findOne(userId);
+    return await this.userRepository.update(userId, updateUserDto);
   }
 }
