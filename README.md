@@ -38,7 +38,7 @@ docker-compose version 1.26.2, build eefe0d31
 
 ```
 > sudo chmod +x ./run.sh
-> ./run.sh
+> sudo ./run.sh
 ```
 
 종료 스크립트
