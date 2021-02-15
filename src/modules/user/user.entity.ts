@@ -1,4 +1,4 @@
-import { PasswordTransformer } from 'src/util/password.transformer';
+import { PasswordTransformer } from 'src/util/passwordTransformer';
 import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
 
 @Entity()
