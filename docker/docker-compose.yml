@@ -15,9 +15,9 @@ services:
     env_file:
       - ../.env
     environment:
-      MYSQL_ROOT_PASSWORD: ${MARIADB_ROOT_PASSWORD}
-      MYSQL_DATABASE: ${MARIADB_DEFAULT_DATABASE}
-      TZ: ${MARIADB_TIME_ZONE}
+      MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+      MYSQL_DATABASE: ${DB_DEFAULT_DATABASE}
+      TZ: ${DB_TIME_ZONE}
 
   nestjs:
     image: boilerplate_nestjs
@@ -32,7 +32,7 @@ services:
       - app-network
     volumes:
       - ../src:/app/src
-      - ../node_modules:/app/node_modules
+      - /app/node_modules
     env_file:
       - ../.env
     ports:

@@ -1,13 +1,15 @@
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
+const type: any = String(process.env.DB_TYPE);
+
 export const ormconfig: TypeOrmModuleOptions = {
-  type: 'mariadb',
-  host: process.env.MARIADB_HOST,
+  type: type,
+  host: process.env.DB_HOST,
   port: Number(process.env.MARIADB_PORT),
-  username: 'root',
-  password: process.env.MARIADB_ROOT_PASSWORD,
-  database: 'test',
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DEFAULT_DATABASE,
   autoLoadEntities: true,
   synchronize: true,
-  charset: 'utf8mb4',
+  charset: process.env.DB_CHARSET,
 };
