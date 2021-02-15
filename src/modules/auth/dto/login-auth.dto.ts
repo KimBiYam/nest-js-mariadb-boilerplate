@@ -1,6 +1,6 @@
 import { OmitType, PartialType } from '@nestjs/swagger';
-import CreateUserDto from './create-user.dto';
+import CreateUserDto from '../../user/dto/create-user.dto';
 
-export default class LoginUserDto extends PartialType(
+export default class LoginAuthDto extends PartialType(
   OmitType(CreateUserDto, ['name', 'email'] as const),
 ) {}
