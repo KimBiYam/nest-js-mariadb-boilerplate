@@ -19,7 +19,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column({ type: 'date', default: () => 'NOW()' })
+  @Column({ type: 'datetime', default: () => 'NOW()' })
   created: Date;
 
   @Column({ default: true })
