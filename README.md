@@ -27,8 +27,8 @@ docker-compose version 1.26.2, build eefe0d31
 
 ### 실행 및 종료
 
-시작 전 로컬의 node_modules와 컨테이너의 node_modules의
-볼륨 마운트를 위해 모듈 설치
+시작 전 로컬의 node_modules 디렉토리와 도커 컨테이너의<br>
+node_modules 디렉토리의 볼륨 마운트를 위해 모듈 설치
 
 ```
 > npm install
