@@ -10,7 +10,7 @@ import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
 import { CreateUserDto, UserService } from '../user';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import LoginPayload from './payload/login.payload';
+import LoginPayloadDto from './dto/login.payload';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -21,7 +21,7 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() loginUserDto: LoginPayload): Promise<any> {
+  async login(@Body() loginUserDto: LoginPayloadDto): Promise<any> {
     const user = await this.authServcie.validateUser(loginUserDto);
     return await this.authServcie.createToekn(user);
   }

@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { User, UserService } from 'src/modules/user';
-import LoginPayload from './payload/login.payload';
+import LoginPayloadDto from './dto/login.payload';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from 'src/util/hashUtil.ts';
 
@@ -18,7 +18,7 @@ export class AuthService {
     };
   }
 
-  async validateUser(@Body() loginPayload: LoginPayload): Promise<any> {
+  async validateUser(@Body() loginPayload: LoginPayloadDto): Promise<any> {
     const { userId, password } = loginPayload;
     const user = await this.userService.findOneByUserId(userId);
     if (!user || !HashUtil.compare(password, user.password)) {
