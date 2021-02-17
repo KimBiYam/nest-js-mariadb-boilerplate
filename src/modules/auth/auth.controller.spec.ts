@@ -1,3 +1,4 @@
+import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
 import { UserService } from '../user';
 import { AuthController } from './auth.controller';
@@ -9,7 +10,20 @@ describe('AuthController', () => {
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [AuthService, UserService],
+      imports: [
+        JwtModule.register({
+          secret: 'test',
+        }),
+      ],
+      providers: [
+        AuthService,
+        {
+          provide: UserService,
+          useValue: {
+            getElasticSearchData: jest.fn(),
+          },
+        },
+      ],
       controllers: [AuthController],
     }).compile();
 
