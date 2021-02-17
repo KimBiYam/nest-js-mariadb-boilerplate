@@ -8,21 +8,21 @@ export class User {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
-  @Column()
+  @Column({ type: 'varchar' })
   userId: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   name: string;
 
-  @Column()
+  @Column({ type: 'varchar' })
   email: string;
 
-  @Column({ transformer: new PasswordTransformer() })
+  @Column({ type: 'varchar', transformer: new PasswordTransformer() })
   password: string;
 
   @Column({ type: 'datetime', default: () => 'NOW()' })
   created: Date;
 
-  @Column({ default: true })
+  @Column({ type: 'tinyint', default: true })
   isActive: boolean;
 }
