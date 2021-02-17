@@ -1,5 +1,6 @@
 import { JwtModule } from '@nestjs/jwt';
 import { Test, TestingModule } from '@nestjs/testing';
+import { UserService } from '../user';
 import { AuthService } from './auth.service';
 
 describe('AuthService', () => {
@@ -12,7 +13,15 @@ describe('AuthService', () => {
           secret: 'test',
         }),
       ],
-      providers: [AuthService],
+      providers: [
+        AuthService,
+        {
+          provide: UserService,
+          useValue: {
+            getElasticSearchData: jest.fn(),
+          },
+        },
+      ],
     }).compile();
 
     service = module.get<AuthService>(AuthService);
