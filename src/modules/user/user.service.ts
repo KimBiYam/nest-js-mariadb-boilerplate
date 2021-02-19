@@ -22,21 +22,13 @@ export class UserService {
   }
 
   async findOneById(id: number): Promise<User> {
-    const user = await this.userRepository.findOne(id);
-    if (user === undefined) {
-      throw new NotFoundException(`id ${id} is not found`);
-    }
-    return user;
+    return await this.userRepository.findOne(id);
   }
 
   async findOneByUserId(userId: string): Promise<User> {
-    const user = await this.userRepository.findOne({
+    return await this.userRepository.findOne({
       where: { userId },
     });
-    if (user === undefined) {
-      throw new NotFoundException(`userId ${userId} is not found`);
-    }
-    return user;
   }
 
   async remove(id: number): Promise<DeleteResult> {
