@@ -1,6 +1,6 @@
 import { BadRequestException, Body, Injectable } from '@nestjs/common';
 import { User, UserService } from '../../modules/user';
-import LoginPayloadDto from './dto/login.payload';
+import LoginPayloadDto from './dto/login-payload.dto';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from '../../util/hashUtil.ts';
 
