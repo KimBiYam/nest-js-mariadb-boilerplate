@@ -1,7 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail, IsString, MaxLength, MinLength } from 'class-validator';
 
-export default class RegsiterUserDto {
+export class RegsiterUserDto {
   @ApiProperty({ example: 'userId' })
   @IsString()
   userId: string;
