@@ -7,10 +7,11 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
-import { CreateUserDto, UserService } from '../user';
+import { UserService } from '../user';
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import LoginPayloadDto from './dto/login-payload.dto';
+import LoginDto from './dto/login.dto';
+import RegsiterUserDto from './dto/register-user.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -21,14 +22,14 @@ export class AuthController {
   ) {}
 
   @Post('login')
-  async login(@Body() loginUserDto: LoginPayloadDto): Promise<any> {
+  async login(@Body() loginUserDto: LoginDto): Promise<any> {
     const user = await this.authServcie.validateUser(loginUserDto);
     return await this.authServcie.createToekn(user);
   }
 
   @Post('sign-up')
-  async signUp(@Body() CreateUserDto: CreateUserDto): Promise<any> {
-    return await this.userService.create(CreateUserDto);
+  async signUp(@Body() registerPayloadDto: RegsiterUserDto): Promise<any> {
+    return await this.userService.create(registerPayloadDto);
   }
 
   @ApiBearerAuth()
