@@ -2,6 +2,8 @@ import {
   Body,
   Controller,
   Get,
+  HttpCode,
+  HttpStatus,
   Post,
   Request,
   UseGuards,
@@ -21,6 +23,7 @@ export class AuthController {
     private readonly userService: UserService,
   ) {}
 
+  @HttpCode(HttpStatus.OK)
   @Post('login')
   async login(@Body() loginUserDto: LoginDto): Promise<any> {
     const user = await this.authServcie.validateUser(loginUserDto);
