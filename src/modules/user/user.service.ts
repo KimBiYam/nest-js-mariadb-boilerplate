@@ -25,7 +25,7 @@ export class UserService {
   async create(registerUserPayloadDto: RegsiterUserDto): Promise<User> {
     const { userId } = registerUserPayloadDto;
     if (this.findOneByUserId(userId)) {
-      throw new BadRequestException('isExistId');
+      throw new BadRequestException(`Not found ${userId} user`);
     }
     return await this.userRepository.save(registerUserPayloadDto);
   }
