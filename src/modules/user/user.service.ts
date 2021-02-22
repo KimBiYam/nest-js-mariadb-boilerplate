@@ -24,7 +24,7 @@ export class UserService {
   async create(registerUserPayloadDto: RegsiterUserDto): Promise<User> {
     const { userId } = registerUserPayloadDto;
     if (this.findOneByUserId(userId)) {
-      throw new BadRequestException(`Not found ${userId} user`);
+      throw new BadRequestException({ msg: `Is exist user` });
     }
     return await this.userRepository.save(registerUserPayloadDto);
   }
@@ -32,7 +32,7 @@ export class UserService {
   async findOneById(id: number): Promise<User> {
     const user = await this.userRepository.findOne(id);
     if (!user) {
-      throw new NotFoundException(`Not found ${id} user`);
+      throw new NotFoundException({ msg: `Not found ${id} user` });
     }
     return user;
   }
@@ -42,7 +42,7 @@ export class UserService {
       where: { userId },
     });
     if (!user) {
-      throw new NotFoundException(`Not found ${userId} user`);
+      throw new NotFoundException({ msg: `Not found ${userId} user` });
     }
     return user;
   }
