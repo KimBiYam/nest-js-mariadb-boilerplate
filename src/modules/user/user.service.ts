@@ -4,7 +4,6 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { exception } from 'console';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { RegsiterUserDto, UpdateUserDto } from '../auth';
 import { User } from './user.entity';
