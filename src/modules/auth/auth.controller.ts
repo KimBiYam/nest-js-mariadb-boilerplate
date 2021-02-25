@@ -1,9 +1,11 @@
 import {
+  BadRequestException,
   Body,
   Controller,
   Get,
   HttpCode,
   HttpStatus,
+  NotFoundException,
   Post,
   Request,
   UseGuards,
@@ -32,6 +34,11 @@ export class AuthController {
 
   @Post('sign-up')
   async signUp(@Body() registerPayloadDto: RegsiterUserDto): Promise<any> {
+    const { userId } = registerPayloadDto;
+    const user = await this.userService.findOneByUserId(userId);
+    if (user) {
+      throw new BadRequestException('Is exist user');
+    }
     return await this.userService.create(registerPayloadDto);
   }
 
@@ -41,6 +48,9 @@ export class AuthController {
   async getProfile(@Request() request: any): Promise<any> {
     const { userId } = request.user;
     const user = await this.userService.findOneByUserId(userId);
+    if (!user) {
+      throw new NotFoundException('This user not exist');
+    }
     delete user.password;
     return user;
   }

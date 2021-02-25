@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { RegsiterUserDto, UpdateUserDto } from '../auth';
@@ -22,18 +18,11 @@ export class UserService {
   }
 
   async create(registerUserPayloadDto: RegsiterUserDto): Promise<User> {
-    const { userId } = registerUserPayloadDto;
-    if (this.findOneByUserId(userId)) {
-      throw new BadRequestException({ msg: `Is exist user` });
-    }
     return await this.userRepository.save(registerUserPayloadDto);
   }
 
   async findOneById(id: number): Promise<User> {
     const user = await this.userRepository.findOne(id);
-    if (!user) {
-      throw new NotFoundException({ msg: `Not found ${id} user` });
-    }
     return user;
   }
 
@@ -41,9 +30,6 @@ export class UserService {
     const user = await this.userRepository.findOne({
       where: { userId },
     });
-    if (!user) {
-      throw new NotFoundException({ msg: `Not found ${userId} user` });
-    }
     return user;
   }
 
