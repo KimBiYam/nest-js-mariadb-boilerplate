@@ -55,7 +55,7 @@ or
 > bash ./run-dev.sh down
 ```
 
-### Product Mode
+### Production Mode
 
 ```
 > sudo sh ./run-dev.sh up
