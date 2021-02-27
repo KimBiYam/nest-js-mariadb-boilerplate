@@ -35,11 +35,7 @@ DB 컨테이너의 볼륨 마운트 권한 문제를 해결하기 위해 root �
 
 ```
 > sudo sh ./run-dev.sh up
-```
-
 or
-
-```
 > sudo bash ./run-dev.sh up
 ```
 
@@ -47,36 +43,24 @@ or
 
 ```
 > sh ./run-dev.sh down
-```
-
 or
-
-```
 > bash ./run-dev.sh down
 ```
 
 ### Production Mode
 
 ```
-> sh ./run-dev.sh up
-```
-
+> sh ./run.sh up
 or
-
-```
-> bash ./run-dev.sh up
+> bash ./run.sh up
 ```
 
 ### Stop
 
 ```
-> sh ./run-dev.sh down
-```
-
+> sh ./run.sh down
 or
-
-```
-> bash ./run-dev.sh down
+> bash ./run.sh down
 ```
 
 ## Swagger Api Documentation
