@@ -32,13 +32,25 @@ docker-compose version 1.26.2, build eefe0d31
 스크립트 실행
 
 ```
-> sudo ./run-dev.sh up
+> sudo sh ./run-dev.sh up
+```
+
+or
+
+```
+> sudo bash ./run-dev.sh up
 ```
 
 종료 스크립트
 
 ```
-> ./run-dev.sh down
+> sh ./run-dev.sh down
+```
+
+or
+
+```
+> bash ./run-dev.sh down
 ```
 
 ### Product Mode

@@ -1,8 +1,8 @@
-function up() {
+up() {
     docker-compose -f docker/docker-compose-dev.yml up --build
 }
 
-function down() {
+down() {
     docker-compose -f docker/docker-compose-dev.yml down
 }
 

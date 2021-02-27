@@ -13,7 +13,7 @@ services:
       - ../mariadb/data:/var/lib/mysql
       - ../mariadb/conf/mariadb.cnf:/etc/mysql/my.cnf
     env_file:
-      - ../.env
+      - ../.env-dev
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DEFAULT_DATABASE}
@@ -34,7 +34,7 @@ services:
       - ../:/app
       - /app/node_modules
     env_file:
-      - ../.env
+      - ../.env-dev
     ports:
       - 5000:5000
 
