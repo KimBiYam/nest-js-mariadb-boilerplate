@@ -1,5 +1,5 @@
 up() {
-    docker-compose -f docker/docker-compose-dev.yml up --build
+    docker-compose -f docker/docker-compose-dev.yml up --remove-orphans --build 
 }
 
 down() {

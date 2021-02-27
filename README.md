@@ -58,13 +58,13 @@ or
 ### Production Mode
 
 ```
-> sudo sh ./run-dev.sh up
+> sh ./run-dev.sh up
 ```
 
 or
 
 ```
-> sudo bash ./run-dev.sh up
+> bash ./run-dev.sh up
 ```
 
 ### Stop

@@ -1,0 +1,39 @@
+version: '3.2'
+
+services:
+  nestjs:
+    image: boilerplate_nestjs
+    container_name: boilerplate_nestjs
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile
+    restart: always
+    networks:
+      - app-network
+    volumes:
+      - ../:/app
+      - /app/node_modules
+    env_file:
+      - ../.env-dev
+    ports:
+      - 5000:5000
+
+  nginx:
+    image: nginx:stable
+    container_name: boilerplate_nginx
+    build:
+      context: ../
+      dockerfile: ./docker/Dockerfile.nginx
+    restart: always
+    depends_on:
+      - nestjs
+    volumes:
+      - ../nginx/nginx.conf:/etc/nginx/nginx.conf
+    networks:
+      - app-network
+    ports:
+      - 80:80
+
+networks:
+  app-network:
+    driver: bridge
