@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 
 const type: any = String(process.env.DB_TYPE);
 
-export const ormconfig: TypeOrmModuleOptions = {
+export const ormModuleOptions: TypeOrmModuleOptions = {
   type: type,
   host: process.env.DB_HOST,
   port: Number(process.env.MARIADB_PORT),

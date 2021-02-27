@@ -25,11 +25,11 @@ Docker version 19.03.13, build 4484c46d9d
 docker-compose version 1.26.2, build eefe0d31
 ```
 
-## 실행 및 종료
+## Run
 
-### Devlopment Mode
+## Devlopment Mode
 
-스크립트 실행
+### Run
 
 ```
 > sudo sh ./run-dev.sh up
@@ -41,7 +41,7 @@ or
 > sudo bash ./run-dev.sh up
 ```
 
-종료 스크립트
+### Stop
 
 ```
 > sh ./run-dev.sh down
