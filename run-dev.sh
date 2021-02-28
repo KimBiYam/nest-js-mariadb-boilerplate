@@ -3,7 +3,7 @@ up() {
 }
 
 down() {
-    docker-compose -f docker/docker-compose-dev.yml down
+    docker-compose -f docker/docker-compose-dev.yml down --remove-orphans
 }
 
 MODE=$1

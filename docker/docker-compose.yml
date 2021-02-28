@@ -21,9 +21,6 @@ services:
   nginx:
     image: nginx:stable
     container_name: boilerplate_nginx
-    build:
-      context: ../
-      dockerfile: ./docker/Dockerfile.nginx
     restart: always
     depends_on:
       - nestjs

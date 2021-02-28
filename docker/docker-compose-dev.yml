@@ -41,4 +41,3 @@ services:
 networks:
   app-network:
     driver: bridge
-    name: nest-js-mariadb-boilerplate-dev
