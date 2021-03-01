@@ -1,9 +1,9 @@
 up() {
-    docker-compose -f docker/docker-compose-dev.yml up --remove-orphans --build 
+    docker-compose -f docker/docker-compose-dev.yml up --build 
 }
 
 down() {
-    docker-compose -f docker/docker-compose-dev.yml down --remove-orphans
+    docker-compose -f docker/docker-compose-dev.yml down
 }
 
 MODE=$1
