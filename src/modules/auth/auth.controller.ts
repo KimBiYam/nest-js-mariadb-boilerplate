@@ -27,8 +27,8 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
-  async login(@Body() loginUserDto: LoginDto): Promise<any> {
-    const user = await this.authServcie.validateUser(loginUserDto);
+  async login(@Body() loginDto: LoginDto): Promise<any> {
+    const user = await this.authServcie.validateUser(loginDto);
     return await this.authServcie.createToekn(user);
   }
 

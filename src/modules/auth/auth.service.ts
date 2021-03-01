@@ -18,8 +18,8 @@ export class AuthService {
     };
   }
 
-  async validateUser(@Body() loginPayload: LoginDto): Promise<any> {
-    const { userId, password } = loginPayload;
+  async validateUser(@Body() loginDto: LoginDto): Promise<any> {
+    const { userId, password } = loginDto;
     const user = await this.userService.findOneByUserId(userId);
     if (!user || !HashUtil.compare(password, user.password)) {
       throw new BadRequestException('Bad Reqeust');

@@ -74,11 +74,4 @@ describe('UserService', () => {
     expect(user).toEqual(testUser);
     expect(userRepository.findOne).toBeCalled();
   });
-
-  // it('remove', async () => {
-  //   const { id } = testUser;
-  //   jest.spyOn(userRepository, 'delete').mockRejectedValueOnce(testUser);
-
-  //   await service.remove(id);
-  // });
 });
