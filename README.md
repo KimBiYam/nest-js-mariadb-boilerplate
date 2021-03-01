@@ -1,6 +1,6 @@
 # NestJS Boilerplate
 
-NestJs, Docker, MariaDB로 구성된 NestJs Boilerplate
+NestJs, Docker, MariaDB, NGINX 로 구성된 NestJs Boilerplate
 
 ## 기술 스택
 
@@ -11,6 +11,7 @@ NestJs, Docker, MariaDB로 구성된 NestJs Boilerplate
 | docker-compose | 1.26.2   |
 | NestJs         | 7.5.1    |
 | MariaDB        | 10.5.8   |
+| NGINX          | stable   |
 
 ## 시작하기
 
