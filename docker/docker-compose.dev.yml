@@ -3,7 +3,7 @@ version: '3.2'
 services:
   mariadb:
     image: mariadb:10.5.8
-    container_name: boilerplate_mariadb
+    container_name: nestjs-boilerplate-mariadb
     restart: always
     networks:
       - app-network
@@ -20,8 +20,8 @@ services:
       TZ: ${DB_TIME_ZONE}
 
   nestjs:
-    image: boilerplate_nestjs
-    container_name: boilerplate_nestjs
+    image: nestjs-boilerplate-nestjs-dev
+    container_name: nestjs-boilerplate-nestjs-dev
     build:
       context: ../
       dockerfile: ./docker/Dockerfile.dev

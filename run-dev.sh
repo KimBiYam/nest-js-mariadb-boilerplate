@@ -1,9 +1,9 @@
 up() {
-    docker-compose --env-file .env-dev -f docker/docker-compose-dev.yml up --build 
+    docker-compose --env-file .env-dev -f docker/docker-compose.dev.yml up --build
 }
 
 down() {
-    docker-compose --env-file .env-dev -f docker/docker-compose-dev.yml down
+    docker-compose --env-file .env-dev -f docker/docker-compose.dev.yml down
 }
 
 MODE=$1

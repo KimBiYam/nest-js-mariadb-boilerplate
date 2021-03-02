@@ -2,25 +2,20 @@ version: '3.2'
 
 services:
   nestjs:
-    image: boilerplate_nestjs
-    container_name: boilerplate_nestjs
+    image: nestjs-boilerplate-nestjs
+    container_name: nestjs-boilerplate-nestjs
     build:
       context: ../
       dockerfile: ./docker/Dockerfile
     restart: always
     networks:
       - app-network
-    volumes:
-      - ../:/app
-      - /app/node_modules
     env_file:
-      - ../.env-dev
-    ports:
-      - 5000:5000
+      - ../.env
 
   nginx:
     image: nginx:stable
-    container_name: boilerplate_nginx
+    container_name: nestjs-boilerplate-nginx
     restart: always
     depends_on:
       - nestjs
