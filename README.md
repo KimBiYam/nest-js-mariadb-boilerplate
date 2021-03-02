@@ -48,7 +48,7 @@ or
 > bash ./run-dev.sh down
 ```
 
-### Production Mode
+## Production Mode
 
 ```
 > sh ./run.sh up
