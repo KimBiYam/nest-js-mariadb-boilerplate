@@ -5,6 +5,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   NotFoundException,
   Post,
   Request,
@@ -24,6 +25,7 @@ export class AuthController {
     private readonly authServcie: AuthService,
     private readonly userService: UserService,
   ) {}
+  private logger = new Logger('Auth');
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
@@ -37,7 +39,8 @@ export class AuthController {
     const { userId } = registerPayloadDto;
     const user = await this.userService.findOneByUserId(userId);
     if (user) {
-      throw new BadRequestException('Is exist user');
+      this.logger.error('Is exist user id');
+      throw new BadRequestException('Is exist user id');
     }
     return await this.userService.create(registerPayloadDto);
   }
@@ -49,6 +52,7 @@ export class AuthController {
     const { userId } = request.user;
     const user = await this.userService.findOneByUserId(userId);
     if (!user) {
+      this.logger.error('This user not exist');
       throw new NotFoundException('This user not exist');
     }
     delete user.password;
