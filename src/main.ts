@@ -5,6 +5,9 @@ import { setupSwagger } from './config';
 import { ConfigService } from '@nestjs/config';
 import LoggingInterceptor from './interceptors/logging.interceptor';
 import ConvertResponseInterceptor from './interceptors/convert-response.interceptor';
+import AdminBro from 'admin-bro';
+import { Database, Resource } from '@admin-bro/typeorm';
+import { validate } from 'class-validator';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
