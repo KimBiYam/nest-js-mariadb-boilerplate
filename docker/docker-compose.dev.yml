@@ -18,6 +18,7 @@ services:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DEFAULT_DATABASE}
       TZ: ${DB_TIME_ZONE}
+    user: 1000:1000
 
   nestjs:
     image: nestjs-boilerplate-nestjs-dev

@@ -32,12 +32,10 @@ docker-compose version 1.26.2, build eefe0d31
 
 ### Run
 
-DB 컨테이너의 볼륨 마운트 권한 문제를 해결하기 위해 root 권한으로 실행을 권장
-
 ```
-> sudo sh ./run-dev.sh up
+> sh ./run-dev.sh up
 or
-> sudo bash ./run-dev.sh up
+> bash ./run-dev.sh up
 ```
 
 ### Stop
