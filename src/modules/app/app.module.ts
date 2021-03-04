@@ -11,7 +11,6 @@ import {
   ormModuleOptions,
 } from 'src/config/';
 import { ConfigModule } from '@nestjs/config';
-import loggerMiddleware from 'src/middlewares/logger.middleware';
 
 @Module({
   imports: [
@@ -26,8 +25,4 @@ import loggerMiddleware from 'src/middlewares/logger.middleware';
     { provide: APP_FILTER, useClass: CustomExceptionFilter },
   ],
 })
-export class AppModule implements NestModule {
-  configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(loggerMiddleware).forRoutes('*');
-  }
-}
+export class AppModule {}
