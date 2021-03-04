@@ -1,11 +1,11 @@
 import { PasswordTransformer } from '../../util/passwordTransformer';
 import {
+  BaseEntity,
   Column,
   Entity,
   Index,
   PrimaryGeneratedColumn,
   Unique,
-  BaseEntity,
   CreateDateColumn,
 } from 'typeorm';
 
