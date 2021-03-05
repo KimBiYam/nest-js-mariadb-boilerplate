@@ -12,11 +12,11 @@ export default class LoggingInterceptor implements NestInterceptor {
   private logger = new Logger('HTTP');
 
   intercept(
-    context: ExecutionContext,
+    ctx: ExecutionContext,
     next: CallHandler<any>,
   ): Observable<any> | Promise<Observable<any>> {
-    const request = context.switchToHttp().getRequest();
-    const response = context.switchToHttp().getResponse();
+    const request = ctx.switchToHttp().getRequest();
+    const response = ctx.switchToHttp().getResponse();
 
     const { ip, method, path: url } = request;
     const userAgent = request.get('user-agent') || '';

@@ -3,12 +3,9 @@ import {
   Body,
   Controller,
   Get,
-  HttpCode,
-  HttpStatus,
   Logger,
   NotFoundException,
   Post,
-  Request,
   UseGuards,
 } from '@nestjs/common';
 import {
@@ -22,6 +19,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
+import { RequestUser } from '../../decorators/user.decorator';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -60,8 +58,9 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@Request() request: any): Promise<any> {
-    const { userId } = request.user;
+  async getProfile(@RequestUser() requestUser: any): Promise<any> {
+    const { userId } = requestUser;
+    this.logger.debug(requestUser);
     const user = await this.userService.findOneByUserId(userId);
     if (!user) {
       this.logger.error('This user not exist');
