@@ -11,7 +11,12 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { UserService } from '../user';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -20,6 +25,8 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 
 @ApiTags('Auth')
 @Controller('auth')
+@ApiResponse({ status: 400, description: '잘못된 요청' })
+@ApiResponse({ status: 500, description: '서버 에러' })
 export class AuthController {
   constructor(
     private readonly authServcie: AuthService,
@@ -27,9 +34,9 @@ export class AuthController {
   ) {}
   private logger = new Logger('Auth');
 
-  @HttpCode(HttpStatus.OK)
   @Post('login')
   @ApiOperation({ summary: '로그인' })
+  @ApiResponse({ status: 201, description: '로그인 성공' })
   async login(@Body() loginDto: LoginDto): Promise<any> {
     const user = await this.authServcie.validateUser(loginDto);
     return await this.authServcie.createToekn(user);
@@ -37,6 +44,7 @@ export class AuthController {
 
   @Post('sign-up')
   @ApiOperation({ summary: '회원가입' })
+  @ApiResponse({ status: 201, description: '회원가입 성공' })
   async signUp(@Body() registerPayloadDto: RegsiterUserDto): Promise<any> {
     const { userId } = registerPayloadDto;
     const user = await this.userService.findOneByUserId(userId);
@@ -50,6 +58,7 @@ export class AuthController {
   @Get('profile')
   @ApiBearerAuth()
   @ApiOperation({ summary: '본인의 프로필 조회' })
+  @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
   async getProfile(@Request() request: any): Promise<any> {
     const { userId } = request.user;
