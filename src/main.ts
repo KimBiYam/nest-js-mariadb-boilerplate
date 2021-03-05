@@ -4,6 +4,7 @@ import { AppModule } from './modules/app/app.module';
 import { setupSwagger } from './config';
 import { ConfigService } from '@nestjs/config';
 import LoggingInterceptor from './interceptors/logging.interceptor';
+import ConvertResponseInterceptor from './interceptors/convert-response.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,10 @@ async function bootstrap() {
   if (configService.get('NODE_ENV') === 'DEVELOPMENT') {
     setupSwagger(app);
   }
+  app.enableCors();
+  app.useGlobalInterceptors(new LoggingInterceptor());
+  app.useGlobalInterceptors(new ConvertResponseInterceptor());
+
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
