@@ -1,10 +1,17 @@
 import { PasswordTransformer } from '../../util/passwordTransformer';
-import { Column, Entity, Index, PrimaryGeneratedColumn, Unique } from 'typeorm';
+import {
+  Column,
+  Entity,
+  Index,
+  PrimaryGeneratedColumn,
+  Unique,
+  BaseEntity,
+} from 'typeorm';
 
 @Entity()
 @Index(['id'], { unique: true })
 @Unique(['userId', 'email'])
-export class User {
+export class User extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
