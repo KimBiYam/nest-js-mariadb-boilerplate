@@ -17,7 +17,6 @@ async function bootstrap() {
   app.enableCors();
   app.useGlobalInterceptors(new LoggingInterceptor());
   app.useGlobalInterceptors(new ConvertResponseInterceptor());
-
   app.useGlobalPipes(
     new ValidationPipe({
       whitelist: true,
@@ -25,7 +24,6 @@ async function bootstrap() {
       transform: true,
     }),
   );
-  app.useGlobalInterceptors(new LoggingInterceptor());
   await app.listen(port);
 }
 bootstrap();
