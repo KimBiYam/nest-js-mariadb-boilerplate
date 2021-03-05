@@ -11,7 +11,7 @@ import {
   Request,
   UseGuards,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiTags } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { UserService } from '../user';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
@@ -29,12 +29,14 @@ export class AuthController {
 
   @HttpCode(HttpStatus.OK)
   @Post('login')
+  @ApiOperation({ summary: '로그인' })
   async login(@Body() loginDto: LoginDto): Promise<any> {
     const user = await this.authServcie.validateUser(loginDto);
     return await this.authServcie.createToekn(user);
   }
 
   @Post('sign-up')
+  @ApiOperation({ summary: '회원가입' })
   async signUp(@Body() registerPayloadDto: RegsiterUserDto): Promise<any> {
     const { userId } = registerPayloadDto;
     const user = await this.userService.findOneByUserId(userId);
@@ -45,9 +47,10 @@ export class AuthController {
     return await this.userService.create(registerPayloadDto);
   }
 
-  @ApiBearerAuth()
-  @UseGuards(JwtAuthGuard)
   @Get('profile')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '본인의 프로필 조회' })
+  @UseGuards(JwtAuthGuard)
   async getProfile(@Request() request: any): Promise<any> {
     const { userId } = request.user;
     const user = await this.userService.findOneByUserId(userId);

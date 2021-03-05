@@ -1,5 +1,5 @@
 import { Controller, Get, Logger } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AppService } from './app.service';
 
 @ApiTags('Hello World')
@@ -9,6 +9,7 @@ export class AppController {
   private logger = new Logger('App');
 
   @Get()
+  @ApiOperation({ summary: 'Hello World!' })
   getHello(): string {
     this.logger.log('Get Hello');
 
