@@ -33,33 +33,25 @@ docker-compose version 1.26.2, build eefe0d31
 ### Run
 
 ```
-> sh ./run-dev.sh up
-or
-> bash ./run-dev.sh up
+> ./run-dev.sh up
 ```
 
 ### Stop
 
 ```
-> sh ./run-dev.sh down
-or
-> bash ./run-dev.sh down
+> ./run-dev.sh down
 ```
 
 ## Production Mode
 
 ```
-> sh ./run.sh up
-or
-> bash ./run.sh up
+> ./run.sh up
 ```
 
 ### Stop
 
 ```
-> sh ./run.sh down
-or
-> bash ./run.sh down
+> ./run.sh down
 ```
 
 ## Swagger Api Documentation

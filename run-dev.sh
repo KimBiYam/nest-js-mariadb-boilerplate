@@ -1,3 +1,5 @@
+#!/bin/bash
+
 up() {
     if [ ! -d "mariadb/data" ]
     then
