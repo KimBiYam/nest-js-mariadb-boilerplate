@@ -56,6 +56,6 @@ docker-compose version 1.26.2, build eefe0d31
 
 ## Swagger Api Documentation
 
-API 테스트를 위한 Swagger Api Documentation 사용 가능
+API 테스트를 위한 Swagger Api Documentation 사용 가능 (Only Development Mode)
 
 URL : http://localhost:5000/api/docs
