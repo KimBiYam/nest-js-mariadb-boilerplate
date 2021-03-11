@@ -10,32 +10,31 @@ services:
     ports:
       - 3306:3306
     volumes:
-      - ../mariadb/data:/var/lib/mysql
-      - ../mariadb/conf/mariadb.cnf:/etc/mysql/my.cnf
+      - ./mariadb/data:/var/lib/mysql
+      - ./mariadb/conf/mariadb.cnf:/etc/mysql/my.cnf
     env_file:
-      - ../.env-dev
+      - .env-dev
     environment:
       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
       MYSQL_DATABASE: ${DB_DEFAULT_DATABASE}
       TZ: ${DB_TIME_ZONE}
-    user: 1000:1000
 
   nestjs:
     image: nestjs-boilerplate-nestjs-dev
     container_name: nestjs-boilerplate-nestjs-dev
     build:
-      context: ../
-      dockerfile: ./docker/Dockerfile.dev
+      context: ./
+      dockerfile: ./Dockerfile.dev
     restart: always
     depends_on:
       - mariadb
     networks:
       - app-network
     volumes:
-      - ../:/app
+      - ./:/app
       - /app/node_modules
     env_file:
-      - ../.env-dev
+      - ./.env-dev
     ports:
       - 5000:5000
 
