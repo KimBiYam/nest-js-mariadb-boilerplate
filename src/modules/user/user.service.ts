@@ -33,9 +33,8 @@ export class UserService {
     return user;
   }
 
-  async remove(id: number): Promise<DeleteResult> {
-    await this.findOneById(id);
-    return await this.userRepository.delete(id);
+  async remove(userId: string): Promise<DeleteResult> {
+    return await this.userRepository.delete({ userId });
   }
 
   async update(
