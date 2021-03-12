@@ -26,8 +26,11 @@ export class AuthService {
 
   async validateUser(userId: string, password: string): Promise<any> {
     const user = await this.userService.findOneByUserId(userId);
-    if (!user || !HashUtil.compare(password, user.password)) {
-      throw new BadRequestException('Bad Reqeust');
+    if (!user) {
+      throw new BadRequestException('User not exist');
+    }
+    if (!HashUtil.compare(password, user.password)) {
+      throw new BadRequestException('Password not macth');
     }
     return user;
   }

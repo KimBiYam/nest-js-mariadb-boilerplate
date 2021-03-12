@@ -2,6 +2,7 @@ import {
   BadRequestException,
   Body,
   Controller,
+  Delete,
   Get,
   Logger,
   NotFoundException,
@@ -60,7 +61,7 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@RequestUser() requestUser: any): Promise<User> {
+  async getProfile(@RequestUser() requestUser: RequestUser): Promise<User> {
     const { userId } = requestUser;
     this.logger.debug(requestUser);
     const user = await this.userService.findOneByUserId(userId);
@@ -77,12 +78,21 @@ export class AuthController {
   @ApiOperation({ summary: '패스워드 업데이트' })
   @UseGuards(JwtAuthGuard)
   async updatePassword(
-    @RequestUser() requestUser: any,
+    @RequestUser() requestUser: RequestUser,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ): Promise<any> {
     const { userId } = requestUser;
     const { newPassword, previousPassword } = updatePasswordDto;
     await this.authServcie.validateUser(userId, previousPassword);
     return this.userService.updatePassword(userId, newPassword);
+  }
+
+  @Delete('sign-out')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '회원탈퇴' })
+  @UseGuards(JwtAuthGuard)
+  async signOut(@RequestUser() requestUser: RequestUser): Promise<any> {
+    const { userId } = requestUser;
+    return await this.userService.remove(userId);
   }
 }
