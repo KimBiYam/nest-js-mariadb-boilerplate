@@ -45,4 +45,14 @@ export class UserService {
     await this.findOneByUserId(userId);
     return await this.userRepository.update(userId, updateUserPayloadDto);
   }
+
+  async updatePassword(
+    userId: string,
+    newPassword: string,
+  ): Promise<UpdateResult> {
+    return await this.userRepository.update(
+      { userId },
+      { password: newPassword },
+    );
+  }
 }
