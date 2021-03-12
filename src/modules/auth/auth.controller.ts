@@ -5,6 +5,7 @@ import {
   Get,
   Logger,
   NotFoundException,
+  Patch,
   Post,
   UseGuards,
 } from '@nestjs/common';
@@ -14,12 +15,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserService } from '../user';
+import { User, UserService } from '../user';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { RequestUser } from '../../decorators/user.decorator';
+import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -36,7 +38,7 @@ export class AuthController {
   @ApiOperation({ summary: '로그인' })
   @ApiResponse({ status: 201, description: '로그인 성공' })
   async login(@Body() loginDto: LoginDto): Promise<any> {
-    const user = await this.authServcie.validateUser(loginDto);
+    const user = await this.authServcie.login(loginDto);
     return await this.authServcie.createToekn(user);
   }
 
@@ -58,7 +60,7 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@RequestUser() requestUser: any): Promise<any> {
+  async getProfile(@RequestUser() requestUser: any): Promise<User> {
     const { userId } = requestUser;
     this.logger.debug(requestUser);
     const user = await this.userService.findOneByUserId(userId);
@@ -68,5 +70,19 @@ export class AuthController {
     }
     delete user.password;
     return user;
+  }
+
+  @Patch('update-password')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: '패스워드 업데이트' })
+  @UseGuards(JwtAuthGuard)
+  async updatePassword(
+    @RequestUser() requestUser: any,
+    @Body() updatePasswordDto: UpdatePasswordDto,
+  ): Promise<any> {
+    const { userId } = requestUser;
+    const { newPassword, previousPassword } = updatePasswordDto;
+    await this.authServcie.validateUser(userId, previousPassword);
+    return this.userService.updatePassword(userId, newPassword);
   }
 }
