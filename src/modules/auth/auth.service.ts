@@ -1,4 +1,4 @@
-import { BadRequestException, Body, Injectable } from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { User, UserService } from '../../modules/user';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from '../../util/hashUtil.ts';
