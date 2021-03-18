@@ -16,7 +16,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { User, UserService } from '../user';
+import { UserEntity, UserService } from '../user';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
@@ -24,8 +24,8 @@ import { JwtAuthGuard } from './jwt-auth.guard';
 import { RequestUser } from '../../decorators/user.decorator';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
-@ApiTags('Auth')
 @Controller('auth')
+@ApiTags('Auth')
 @ApiResponse({ status: 400, description: '잘못된 요청' })
 @ApiResponse({ status: 500, description: '서버 에러' })
 export class AuthController {
@@ -61,7 +61,9 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@RequestUser() requestUser: RequestUser): Promise<User> {
+  async getProfile(
+    @RequestUser() requestUser: RequestUser,
+  ): Promise<UserEntity> {
     const { userId } = requestUser;
     this.logger.debug(requestUser);
     const user = await this.userService.findOneByUserId(userId);

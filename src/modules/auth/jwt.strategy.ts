@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
-import { User, UserService } from '../user';
+import { UserEntity, UserService } from '../user';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
@@ -14,7 +14,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: any): Promise<any> {
-    const user: User = await this.userService.findOneByUserId(payload.id);
+    const user: UserEntity = await this.userService.findOneByUserId(payload.id);
     const { userId, name } = user;
     return { userId: userId, username: name };
   }

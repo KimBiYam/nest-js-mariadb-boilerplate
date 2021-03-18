@@ -11,7 +11,7 @@ import {
 @Entity()
 @Index(['id'], { unique: true })
 @Unique(['userId', 'email'])
-export class User extends BaseEntity {
+export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 

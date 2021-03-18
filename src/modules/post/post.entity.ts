@@ -6,11 +6,11 @@ import {
   ManyToOne,
   PrimaryGeneratedColumn,
 } from 'typeorm';
-import { User } from '../user';
+import { UserEntity } from '../user';
 
 @Entity()
 @Index(['id'], { unique: true })
-export class Post extends BaseEntity {
+export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
@@ -23,6 +23,6 @@ export class Post extends BaseEntity {
   @Column({ type: 'datetime', default: () => 'NOW()' })
   created: Date;
 
-  @ManyToOne(() => User, (user) => user.id, { cascade: true })
+  @ManyToOne(() => UserEntity, (user) => user.id, { cascade: true })
   user: string;
 }

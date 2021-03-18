@@ -1,5 +1,5 @@
 import { BadRequestException, Injectable } from '@nestjs/common';
-import { User, UserService } from '../../modules/user';
+import { UserEntity, UserService } from '../../modules/user';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from '../../util/hashUtil.ts';
 import { LoginDto } from './dto/login.dto';
@@ -11,7 +11,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToekn(user: User) {
+  async createToekn(user: UserEntity) {
     return {
       accessToken: this.jwtService.sign({ id: user.userId }),
       user,

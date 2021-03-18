@@ -2,31 +2,31 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { RegsiterUserDto, UpdateUserDto } from '../auth';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepository: Repository<User>,
+    @InjectRepository(UserEntity)
+    private readonly userRepository: Repository<UserEntity>,
   ) {}
 
-  async findAll(): Promise<User[]> {
+  async findAll(): Promise<UserEntity[]> {
     return await this.userRepository.find({
       select: ['userId', 'name', 'email', 'isActive', 'created'],
     });
   }
 
-  async create(registerUserPayloadDto: RegsiterUserDto): Promise<User> {
+  async create(registerUserPayloadDto: RegsiterUserDto): Promise<UserEntity> {
     return await this.userRepository.save(registerUserPayloadDto);
   }
 
-  async findOneById(id: number): Promise<User> {
+  async findOneById(id: number): Promise<UserEntity> {
     const user = await this.userRepository.findOne(id);
     return user;
   }
 
-  async findOneByUserId(userId: string): Promise<User> {
+  async findOneByUserId(userId: string): Promise<UserEntity> {
     const user = await this.userRepository.findOne({
       where: { userId },
     });
