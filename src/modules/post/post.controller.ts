@@ -6,8 +6,17 @@ import {
   UseGuards,
   NotFoundException,
   Body,
+  Query,
+  Param,
+  ParseIntPipe,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiParam,
+  ApiQuery,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RequestUser } from 'src/decorators/user.decorator';
 import { JwtAuthGuard } from '../auth';
 import { UserService } from '../user';
@@ -46,5 +55,16 @@ export class PostController {
     }
     this.logger.log(user);
     return await this.PostService.create(createPostDto, user.id);
+  }
+
+  @Get(':id')
+  @ApiParam({ name: 'id' })
+  async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
+    const post = await this.PostService.findOneByPostId(id);
+    if (!post) {
+      this.logger.error('This post nsot exist');
+      throw new NotFoundException('This post not exist');
+    }
+    return post;
   }
 }
