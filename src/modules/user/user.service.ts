@@ -13,7 +13,7 @@ export class UserService {
 
   async findAll(): Promise<UserEntity[]> {
     return await this.userRepository.find({
-      select: ['userId', 'name', 'email', 'isActive', 'created'],
+      select: ['userId', 'name', 'email', 'isActive', 'createdAt'],
     });
   }
 

@@ -1,10 +1,12 @@
 import {
   BaseEntity,
   Column,
+  CreateDateColumn,
   Entity,
   Index,
   ManyToOne,
   PrimaryGeneratedColumn,
+  UpdateDateColumn,
 } from 'typeorm';
 import { UserEntity } from '../user';
 
@@ -20,9 +22,12 @@ export class PostEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   content: string;
 
-  @Column({ type: 'datetime', default: () => 'NOW()' })
-  created: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.id)
-  userId: number;
+  @UpdateDateColumn()
+  updatedAt: Date;
+
+  @ManyToOne(() => UserEntity, (user) => user)
+  user: UserEntity;
 }

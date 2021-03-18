@@ -6,6 +6,7 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   BaseEntity,
+  CreateDateColumn,
 } from 'typeorm';
 
 @Entity({ name: 'user' })
@@ -27,9 +28,12 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar', transformer: new PasswordTransformer() })
   password: string;
 
-  @Column({ type: 'datetime', default: () => 'NOW()' })
-  created: Date;
+  @CreateDateColumn()
+  createdAt: Date;
 
   @Column({ type: 'tinyint', default: true })
   isActive: boolean;
+
+  // @OneToMany(() => PostEntity, (post) => post.user)
+  // posts: PostEntity[];
 }

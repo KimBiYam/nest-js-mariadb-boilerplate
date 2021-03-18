@@ -8,7 +8,7 @@ import { APP_FILTER } from '@nestjs/core';
 import { configModuleOption, ormModuleOptions } from 'src/config/';
 import { ConfigModule } from '@nestjs/config';
 import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
-import { PostModule } from '../post/post.module';
+import { PostModule } from '../post';
 
 @Module({
   imports: [
