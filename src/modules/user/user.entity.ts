@@ -8,7 +8,7 @@ import {
   BaseEntity,
 } from 'typeorm';
 
-@Entity()
+@Entity({ name: 'user' })
 @Index(['id'], { unique: true })
 @Unique(['userId', 'email'])
 export class UserEntity extends BaseEntity {

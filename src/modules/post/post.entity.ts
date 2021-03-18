@@ -8,7 +8,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../user';
 
-@Entity()
+@Entity({ name: 'post' })
 @Index(['id'], { unique: true })
 export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
@@ -23,6 +23,6 @@ export class PostEntity extends BaseEntity {
   @Column({ type: 'datetime', default: () => 'NOW()' })
   created: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.id, { cascade: true })
-  user: string;
+  @ManyToOne(() => UserEntity, (user) => user.id)
+  userId: number;
 }

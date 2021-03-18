@@ -65,7 +65,6 @@ export class AuthController {
     @RequestUser() requestUser: RequestUser,
   ): Promise<UserEntity> {
     const { userId } = requestUser;
-    this.logger.debug(requestUser);
     const user = await this.userService.findOneByUserId(userId);
     if (!user) {
       this.logger.error('This user not exist');
