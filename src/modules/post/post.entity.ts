@@ -28,6 +28,6 @@ export class PostEntity extends BaseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user)
+  @ManyToOne(() => UserEntity, (user) => user.id)
   user: UserEntity;
 }
