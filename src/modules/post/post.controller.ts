@@ -11,7 +11,13 @@ import {
   Put,
   Delete,
 } from '@nestjs/common';
-import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
+import {
+  ApiBearerAuth,
+  ApiOperation,
+  ApiParam,
+  ApiResponse,
+  ApiTags,
+} from '@nestjs/swagger';
 import { RequestUser } from 'src/decorators/user.decorator';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth';
@@ -32,6 +38,8 @@ export class PostController {
   private logger = new Logger('Post');
 
   @Get()
+  @ApiOperation({ summary: '전체 게시글 가져오기' })
+  @ApiResponse({ status: 200, description: '게시글 가져오기 성공' })
   async getPosts(): Promise<PostEntity[]> {
     return await this.postService.findAll();
   }
@@ -39,6 +47,8 @@ export class PostController {
   @Post()
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '게시글 작성' })
+  @ApiResponse({ status: 201, description: '게시글 작성 성공' })
   async createPost(
     @RequestUser() requestUser: RequestUser,
     @Body() createPostDto: CreatePostDto,
@@ -55,6 +65,8 @@ export class PostController {
 
   @Get(':id')
   @ApiParam({ name: 'id' })
+  @ApiOperation({ summary: '특정 게시글 가져오기' })
+  @ApiResponse({ status: 200, description: '특정 게시글 가져오기 성공' })
   async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
     const post = await this.postService.findOneByPostId(id);
     if (!post) {
@@ -68,6 +80,8 @@ export class PostController {
   @ApiParam({ name: 'id' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '게시글 내용 수정' })
+  @ApiResponse({ status: 200, description: '게시글 내용 수정 성공' })
   async updatePost(
     @RequestUser() requestUser: RequestUser,
     @Param('id', ParseIntPipe) id: number,
@@ -82,6 +96,8 @@ export class PostController {
   @ApiParam({ name: 'id' })
   @ApiBearerAuth()
   @UseGuards(JwtAuthGuard)
+  @ApiOperation({ summary: '게시글 삭제' })
+  @ApiResponse({ status: 200, description: '게시글 삭제 성공' })
   async deletePost(
     @RequestUser() requestUser: RequestUser,
     @Param('id', ParseIntPipe) id: number,

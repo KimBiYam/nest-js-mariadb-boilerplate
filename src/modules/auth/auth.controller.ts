@@ -77,6 +77,7 @@ export class AuthController {
   @Patch('update-password')
   @ApiBearerAuth()
   @ApiOperation({ summary: '패스워드 업데이트' })
+  @ApiResponse({ status: 200, description: '패스워드 업데이트 성공' })
   @UseGuards(JwtAuthGuard)
   async updatePassword(
     @RequestUser() requestUser: RequestUser,
@@ -91,6 +92,7 @@ export class AuthController {
   @Delete('sign-out')
   @ApiBearerAuth()
   @ApiOperation({ summary: '회원탈퇴' })
+  @ApiResponse({ status: 200, description: '회원탈퇴 성공' })
   @UseGuards(JwtAuthGuard)
   async signOut(@RequestUser() requestUser: RequestUser): Promise<any> {
     const { userId } = requestUser;

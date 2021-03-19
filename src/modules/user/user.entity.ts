@@ -33,7 +33,4 @@ export class UserEntity extends BaseEntity {
 
   @Column({ type: 'tinyint', default: true })
   isActive: boolean;
-
-  // @OneToMany(() => PostEntity, (post) => post.user)
-  // posts: PostEntity[];
 }
