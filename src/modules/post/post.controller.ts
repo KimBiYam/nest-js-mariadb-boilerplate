@@ -9,11 +9,11 @@ import {
   Param,
   ParseIntPipe,
   Put,
-  BadRequestException,
+  Delete,
 } from '@nestjs/common';
 import { ApiBearerAuth, ApiParam, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { RequestUser } from 'src/decorators/user.decorator';
-import { InsertResult, UpdateResult } from 'typeorm';
+import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth';
 import { UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
@@ -74,23 +74,20 @@ export class PostController {
     @Body() createPostDto: CreatePostDto,
   ): Promise<UpdateResult> {
     const { userId } = requestUser;
-    const user = await this.userService.findOneByUserId(userId);
-    if (!user) {
-      this.logger.error('This user not exist');
-      throw new NotFoundException('This user not exist');
-    }
-
-    const post = await this.postService.findOneByPostId(id);
-    if (!post) {
-      this.logger.error('This post nsot exist');
-      throw new NotFoundException('This post not exist');
-    }
-
-    if (user.id !== post.user.id) {
-      this.logger.error('This post is not your post');
-      throw new BadRequestException('This post is not your post');
-    }
-
+    await this.postService.validatePostUser(userId, id);
     return await this.postService.update(createPostDto, id);
+  }
+
+  @Delete(':id')
+  @ApiParam({ name: 'id' })
+  @ApiBearerAuth()
+  @UseGuards(JwtAuthGuard)
+  async deletePost(
+    @RequestUser() requestUser: RequestUser,
+    @Param('id', ParseIntPipe) id: number,
+  ): Promise<DeleteResult> {
+    const { userId } = requestUser;
+    await this.postService.validatePostUser(userId, id);
+    return await this.postService.delete(id);
   }
 }

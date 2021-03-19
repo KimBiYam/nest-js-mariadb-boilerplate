@@ -1,7 +1,12 @@
-import { Injectable, Logger } from '@nestjs/common';
+import {
+  BadRequestException,
+  Injectable,
+  Logger,
+  NotFoundException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { InsertResult, Repository, UpdateResult } from 'typeorm';
-import { UserEntity } from '../user';
+import { DeleteResult, Repository, UpdateResult } from 'typeorm';
+import { UserEntity, UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostEntity } from './post.entity';
 
@@ -10,6 +15,7 @@ export class PostService {
   constructor(
     @InjectRepository(PostEntity)
     private readonly postRepository: Repository<PostEntity>,
+    private readonly userService: UserService,
   ) {}
   private logger = new Logger('Post');
 
@@ -40,5 +46,30 @@ export class PostService {
     id: number,
   ): Promise<UpdateResult> {
     return await this.postRepository.update({ id }, createPostDto);
+  }
+
+  async delete(id: number): Promise<DeleteResult> {
+    return await this.postRepository.delete(id);
+  }
+
+  async validatePostUser(userId: string, id: number): Promise<boolean> {
+    const user = await this.userService.findOneByUserId(userId);
+    if (!user) {
+      this.logger.error('This user not exist');
+      throw new NotFoundException('This user not exist');
+    }
+
+    const post = await this.findOneByPostId(id);
+    if (!post) {
+      this.logger.error('This post nsot exist');
+      throw new NotFoundException('This post not exist');
+    }
+
+    if (user.id !== post.user.id) {
+      this.logger.error('This post is not your post');
+      throw new BadRequestException('This post is not your post');
+    }
+
+    return true;
   }
 }
