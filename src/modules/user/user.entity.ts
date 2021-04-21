@@ -11,7 +11,7 @@ import {
 } from 'typeorm';
 import { PostEntity } from '../post';
 
-@Entity({ name: 'user' })
+@Entity({ name: 'users' })
 @Index(['id'], { unique: true })
 @Unique(['userId', 'email'])
 export class UserEntity extends BaseEntity {

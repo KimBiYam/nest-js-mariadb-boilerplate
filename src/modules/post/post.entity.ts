@@ -10,7 +10,7 @@ import {
 } from 'typeorm';
 import { UserEntity } from '../user';
 
-@Entity({ name: 'post' })
+@Entity({ name: 'posts' })
 @Index(['id'], { unique: true })
 export class PostEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
