@@ -33,6 +33,14 @@ export class UserService {
     return user;
   }
 
+  async findOneByUserIdWithoutPassword(userId: string): Promise<UserEntity> {
+    const user = await this.userRepository.findOne({
+      where: { userId },
+      select: ['id', 'userId', 'name', 'email', 'createdAt', 'isActive'],
+    });
+    return user;
+  }
+
   async remove(userId: string): Promise<DeleteResult> {
     return await this.userRepository.delete({ userId });
   }

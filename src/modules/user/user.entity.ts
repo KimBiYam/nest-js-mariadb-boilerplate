@@ -7,7 +7,9 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { PostEntity } from '../post';
 
 @Entity({ name: 'user' })
 @Index(['id'], { unique: true })
@@ -25,7 +27,10 @@ export class UserEntity extends BaseEntity {
   @Column({ type: 'varchar' })
   email: string;
 
-  @Column({ type: 'varchar', transformer: new PasswordTransformer() })
+  @Column({
+    type: 'varchar',
+    transformer: new PasswordTransformer(),
+  })
   password: string;
 
   @CreateDateColumn()
