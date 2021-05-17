@@ -20,16 +20,20 @@ export class PostService {
   private logger = new Logger('Post');
 
   async findAll(): Promise<PostEntity[]> {
-    return await this.postRepository.find({
-      relations: ['user'],
-    });
+    return await this.postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
+      .select(['post', 'user.id', 'user.userId', 'user.name', 'user.email'])
+      .getMany();
   }
 
   async findOneByPostId(id: number): Promise<PostEntity> {
-    return await this.postRepository.findOne({
-      relations: ['user'],
-      where: { id },
-    });
+    return await this.postRepository
+      .createQueryBuilder('post')
+      .leftJoinAndSelect('post.user', 'user')
+      .select(['post', 'user.id', 'user.userId', 'user.name', 'user.email'])
+      .where('post.id = :id', { id })
+      .getOne();
   }
 
   async create(createPostDto: CreatePostDto, user: UserEntity): Promise<any> {
