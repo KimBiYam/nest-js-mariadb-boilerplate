@@ -3,16 +3,12 @@ import {
   BaseEntity,
   Column,
   Entity,
-  Index,
   PrimaryGeneratedColumn,
   Unique,
   CreateDateColumn,
-  OneToMany,
 } from 'typeorm';
-import { PostEntity } from '../post';
 
 @Entity({ name: 'users' })
-@Index(['id'], { unique: true })
 @Unique(['userId', 'email'])
 export class UserEntity extends BaseEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
