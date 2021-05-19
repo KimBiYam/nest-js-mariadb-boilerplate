@@ -1,3 +1,3 @@
-export * from './configModuleOptions';
-export * from './ormModuleOptions';
-export * from './setupSwagger';
+export * from './config-module-options';
+export * from './orm-module-options';
+export * from './setup-swagger';

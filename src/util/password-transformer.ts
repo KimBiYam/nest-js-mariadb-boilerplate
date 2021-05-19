@@ -1,4 +1,4 @@
-import { HashUtil } from './hashUtil.ts';
+import { HashUtil } from './hash-util';
 import { ValueTransformer } from 'typeorm';
 
 export class PasswordTransformer implements ValueTransformer {

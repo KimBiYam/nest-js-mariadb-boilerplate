@@ -1,4 +1,4 @@
-import { PasswordTransformer } from '../../util/passwordTransformer';
+import { PasswordTransformer } from '../../util/password-transformer';
 import {
   Column,
   Entity,
