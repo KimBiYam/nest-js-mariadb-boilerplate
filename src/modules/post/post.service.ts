@@ -65,7 +65,7 @@ export class PostService {
 
     const post = await this.findOneByPostId(id);
     if (!post) {
-      this.logger.error('This post nsot exist');
+      this.logger.error('This post not exist');
       throw new NotFoundException('This post not exist');
     }
 
