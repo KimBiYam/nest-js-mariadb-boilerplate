@@ -21,7 +21,7 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { RequestUser } from '../../decorators/user.decorator';
+import { User, RequestUser } from '../../decorators/user.decorator';
 import { UpdatePasswordDto } from './dto/update-password.dto';
 
 @Controller('auth')
@@ -61,9 +61,7 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(
-    @RequestUser() requestUser: RequestUser,
-  ): Promise<UserEntity> {
+  async getProfile(@RequestUser() requestUser: User): Promise<UserEntity> {
     const { userId } = requestUser;
     const user = await this.userService.findOneByUserIdWithoutPassword(userId);
     if (!user) {
@@ -80,7 +78,7 @@ export class AuthController {
   @ApiResponse({ status: 200, description: '패스워드 업데이트 성공' })
   @UseGuards(JwtAuthGuard)
   async updatePassword(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: User,
     @Body() updatePasswordDto: UpdatePasswordDto,
   ): Promise<any> {
     const { userId } = requestUser;
@@ -94,7 +92,7 @@ export class AuthController {
   @ApiOperation({ summary: '회원탈퇴' })
   @ApiResponse({ status: 200, description: '회원탈퇴 성공' })
   @UseGuards(JwtAuthGuard)
-  async signOut(@RequestUser() requestUser: RequestUser): Promise<any> {
+  async signOut(@RequestUser() requestUser: User): Promise<any> {
     const { userId } = requestUser;
     return await this.userService.remove(userId);
   }

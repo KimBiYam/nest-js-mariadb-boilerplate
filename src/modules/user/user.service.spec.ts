@@ -1,36 +1,38 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { User } from './user.entity';
+import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
 
-const testUser: User = {
+const testUser: UserEntity = {
   id: 0,
   name: 'test',
   email: 'test@test.com',
   password: '12345678',
   userId: 'test',
-  created: new Date(),
+  createdAt: new Date(),
   isActive: true,
 };
 
 describe('UserService', () => {
   let service: UserService;
-  let userRepository: Repository<User>;
+  let userRepository: Repository<UserEntity>;
 
   beforeAll(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         UserService,
         {
-          provide: getRepositoryToken(User),
+          provide: getRepositoryToken(UserEntity),
           useClass: Repository,
         },
       ],
     }).compile();
 
     service = module.get<UserService>(UserService);
-    userRepository = module.get<Repository<User>>(getRepositoryToken(User));
+    userRepository = module.get<Repository<UserEntity>>(
+      getRepositoryToken(UserEntity),
+    );
   });
 
   it('should be defined', () => {

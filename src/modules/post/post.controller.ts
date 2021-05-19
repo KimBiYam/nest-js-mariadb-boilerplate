@@ -18,7 +18,7 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { RequestUser } from 'src/decorators/user.decorator';
+import { User, RequestUser } from '../../decorators';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth';
 import { UserService } from '../user';
@@ -50,7 +50,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 작성' })
   @ApiResponse({ status: 201, description: '게시글 작성 성공' })
   async createPost(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: User,
     @Body() createPostDto: CreatePostDto,
   ): Promise<InsertResult> {
     const { userId } = requestUser;
@@ -83,7 +83,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 내용 수정' })
   @ApiResponse({ status: 200, description: '게시글 내용 수정 성공' })
   async updatePost(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: User,
     @Param('id', ParseIntPipe) id: number,
     @Body() createPostDto: CreatePostDto,
   ): Promise<UpdateResult> {
@@ -99,7 +99,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 삭제' })
   @ApiResponse({ status: 200, description: '게시글 삭제 성공' })
   async deletePost(
-    @RequestUser() requestUser: RequestUser,
+    @RequestUser() requestUser: User,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<DeleteResult> {
     const { userId } = requestUser;
