@@ -87,12 +87,10 @@ describe('PostController', () => {
     const user: User = { userId: '1', username: 'userName' };
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
-    try {
-      userSerivce.findOneByUserId = jest.fn((id) => undefined);
-      await postController.createPost(user, createPostDto);
-    } catch (e) {
-      expect(e).toBeInstanceOf(NotFoundException);
-    }
+    userSerivce.findOneByUserId = jest.fn(() => undefined);
+    expect(
+      async () => await postController.createPost(user, createPostDto),
+    ).rejects.toThrowError(NotFoundException);
   });
 
   it('should get posts', async () => {
@@ -103,9 +101,20 @@ describe('PostController', () => {
 
   it('should get a post', async () => {
     const postId = 1;
+
     const response = await postController.getPost(postId);
 
     expect(response.id).toEqual(postId);
+  });
+
+  it('should throw NotFoundException', async () => {
+    const postId = 100;
+
+    postService.findOneByPostId = jest.fn(() => undefined);
+
+    expect(
+      async () => await postController.getPost(postId),
+    ).rejects.toThrowError(NotFoundException);
   });
 
   it('should update a post', async () => {

@@ -70,7 +70,7 @@ export class PostController {
   async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
     const post = await this.postService.findOneByPostId(id);
     if (!post) {
-      this.logger.error('This post nsot exist');
+      this.logger.error('This post not exist');
       throw new NotFoundException('This post not exist');
     }
     return post;
