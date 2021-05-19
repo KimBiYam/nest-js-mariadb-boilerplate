@@ -2,8 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserService } from '../user';
-import { PostEntity } from './post.entity';
-import { PostService } from './post.service';
+import { PostEntity, PostService } from '.';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
