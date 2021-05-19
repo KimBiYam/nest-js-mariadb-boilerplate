@@ -40,7 +40,7 @@ export class AuthController {
   @ApiResponse({ status: 201, description: '로그인 성공' })
   async login(@Body() loginDto: LoginDto): Promise<any> {
     const user = await this.authServcie.login(loginDto);
-    return await this.authServcie.createToekn(user);
+    return await this.authServcie.createToken(user);
   }
 
   @Post('sign-up')

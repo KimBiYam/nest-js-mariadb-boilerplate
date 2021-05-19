@@ -11,7 +11,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToekn(user: UserEntity) {
+  async createToken(user: UserEntity) {
     return {
       accessToken: this.jwtService.sign({ id: user.userId }),
       user,
