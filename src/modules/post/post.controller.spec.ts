@@ -75,12 +75,10 @@ describe('PostController', () => {
     const user: User = { userId: '1', username: 'userName' };
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
-    const response = (await postController.createPost(
-      user,
-      createPostDto,
-    )) as any;
+    await postController.createPost(user, createPostDto);
+    const result = await postController.getPosts();
 
-    expect(response.id).toEqual(1);
+    expect(result[0].id).toEqual(1);
   });
 
   it('should throw NotFoundException', async () => {
@@ -94,17 +92,17 @@ describe('PostController', () => {
   });
 
   it('should get posts', async () => {
-    const response = await postController.getPosts();
+    const result = await postController.getPosts();
 
-    expect(response.length).toBeGreaterThan(0);
+    expect(result.length).toBeGreaterThan(0);
   });
 
   it('should get a post', async () => {
     const postId = 1;
 
-    const response = await postController.getPost(postId);
+    const result = await postController.getPost(postId);
 
-    expect(response.id).toEqual(postId);
+    expect(result.id).toEqual(postId);
   });
 
   it('should throw NotFoundException', async () => {
@@ -126,14 +124,20 @@ describe('PostController', () => {
     };
     const postId = 1;
 
-    await postController.createPost(user, createPostDto);
-    const response = (await postController.updatePost(
-      user,
-      postId,
-      updatePostDto,
-    )) as any;
+    postService.findOneByPostId = jest.fn(async (id: number) => {
+      return {
+        ...testPostEntity,
+        id,
+        content: updatePostDto.content,
+        title: updatePostDto.title,
+      };
+    });
 
-    expect(response.content).toEqual(updatePostDto.content);
+    await postController.createPost(user, createPostDto);
+    await postController.updatePost(user, postId, updatePostDto);
+    const result = await postController.getPost(postId);
+
+    expect(result.content).toEqual(updatePostDto.content);
   });
 
   it('should delete a post', async () => {
@@ -145,7 +149,7 @@ describe('PostController', () => {
     await postController.deletePost(user, postId);
     postService.findAll = jest.fn(async () => []);
 
-    const response = await postController.getPosts();
-    expect(response.length).toEqual(0);
+    const result = await postController.getPosts();
+    expect(result.length).toEqual(0);
   });
 });
