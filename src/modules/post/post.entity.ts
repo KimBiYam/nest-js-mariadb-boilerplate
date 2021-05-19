@@ -12,7 +12,7 @@ import { UserEntity } from '../user';
 
 @Entity({ name: 'posts' })
 @Index(['id'], { unique: true })
-export class PostEntity extends BaseEntity {
+export class PostEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 

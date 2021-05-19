@@ -1,6 +1,5 @@
 import { PasswordTransformer } from '../../util/passwordTransformer';
 import {
-  BaseEntity,
   Column,
   Entity,
   PrimaryGeneratedColumn,
@@ -10,7 +9,7 @@ import {
 
 @Entity({ name: 'users' })
 @Unique(['userId', 'email'])
-export class UserEntity extends BaseEntity {
+export class UserEntity {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 

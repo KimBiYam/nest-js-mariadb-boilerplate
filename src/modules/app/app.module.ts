@@ -9,14 +9,6 @@ import { configModuleOption, ormModuleOptions } from 'src/config/';
 import { ConfigModule } from '@nestjs/config';
 import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
 import { PostModule } from '../post';
-import { AdminModule } from '@admin-bro/nestjs';
-import { Connection } from 'typeorm';
-import AdminBro from 'admin-bro';
-import { Database, Resource } from '@admin-bro/typeorm';
-import { validate } from 'class-validator';
-
-Resource.validate = validate;
-AdminBro.registerAdapter({ Database, Resource });
 
 @Module({
   imports: [
@@ -25,21 +17,6 @@ AdminBro.registerAdapter({ Database, Resource });
     AuthModule,
     PostModule,
     ConfigModule.forRoot(configModuleOption),
-    AdminModule.createAdminAsync({
-      inject: [Connection],
-      useFactory: (connection: Connection) => ({
-        adminBroOptions: {
-          rootPath: '/admin',
-          databases: [connection],
-        },
-        auth: {
-          authenticate: async (email, password) =>
-            Promise.resolve({ email: 'test' }),
-          cookieName: 'test',
-          cookiePassword: 'testPass',
-        },
-      }),
-    }),
   ],
   controllers: [AppController],
   providers: [
