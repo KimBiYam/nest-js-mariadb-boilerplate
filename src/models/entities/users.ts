@@ -5,7 +5,9 @@ import {
   PrimaryGeneratedColumn,
   Unique,
   CreateDateColumn,
+  OneToMany,
 } from 'typeorm';
+import { Posts } from './posts';
 
 @Entity({ name: 'users' })
 @Unique(['userId', 'email'])
@@ -33,4 +35,7 @@ export class Users {
 
   @Column({ type: 'tinyint', default: true })
   isActive: boolean;
+
+  @OneToMany(() => Posts, (posts) => posts.user)
+  posts: Posts[];
 }
