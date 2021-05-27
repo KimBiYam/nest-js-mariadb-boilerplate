@@ -4,7 +4,7 @@ import { User } from 'src/decorators';
 import { PostController, PostService } from '.';
 import { UserEntity, UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
-import { PostEntity } from './post.entity';
+import { Posts } from '../../entities/posts';
 
 const testUser: UserEntity = {
   id: 1,
@@ -16,7 +16,7 @@ const testUser: UserEntity = {
   isActive: true,
 };
 
-const testPostEntity: PostEntity = {
+const testPostEntity: Posts = {
   content: 'content',
   id: 1,
   title: 'title',

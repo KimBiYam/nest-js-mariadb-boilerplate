@@ -2,7 +2,7 @@ import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { UserEntity, UserService } from '../user';
-import { PostEntity, PostService } from './';
+import { Posts, PostService } from './';
 import { CreatePostDto } from './dto/create-post.dto';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
@@ -17,7 +17,7 @@ const testUser: UserEntity = {
   isActive: true,
 };
 
-const testPostEntity: PostEntity = {
+const testPostEntity: Posts = {
   content: 'content',
   id: 1,
   title: 'title',
@@ -29,14 +29,14 @@ const testPostEntity: PostEntity = {
 describe('PostService', () => {
   let postService: PostService;
   let userService: UserService;
-  let postRepository: MockRepository<PostEntity>;
+  let postRepository: MockRepository<Posts>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PostService,
         {
-          provide: getRepositoryToken(PostEntity),
+          provide: getRepositoryToken(Posts),
           useValue: {
             save: jest.fn(),
             create: jest.fn(),
@@ -55,7 +55,7 @@ describe('PostService', () => {
 
     postService = module.get<PostService>(PostService);
     userService = module.get<UserService>(UserService);
-    postRepository = module.get(getRepositoryToken(PostEntity));
+    postRepository = module.get(getRepositoryToken(Posts));
   });
 
   it('should be defined', () => {

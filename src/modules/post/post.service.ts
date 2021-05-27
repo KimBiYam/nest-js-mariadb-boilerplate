@@ -5,21 +5,21 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
+import { Posts, Users } from 'src/models/entities';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
-import { UserEntity, UserService } from '../user';
+import { UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
-import { PostEntity } from './post.entity';
 
 @Injectable()
 export class PostService {
   constructor(
-    @InjectRepository(PostEntity)
-    private readonly postRepository: Repository<PostEntity>,
+    @InjectRepository(Posts)
+    private readonly postRepository: Repository<Posts>,
     private readonly userService: UserService,
   ) {}
   private logger = new Logger('Post');
 
-  async findAll(): Promise<PostEntity[]> {
+  async findAll(): Promise<Posts[]> {
     return await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
@@ -27,7 +27,7 @@ export class PostService {
       .getMany();
   }
 
-  async findOneByPostId(id: number): Promise<PostEntity> {
+  async findOneByPostId(id: number): Promise<Posts> {
     return await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
@@ -36,8 +36,8 @@ export class PostService {
       .getOne();
   }
 
-  async create(createPostDto: CreatePostDto, user: UserEntity): Promise<any> {
-    const post = new PostEntity();
+  async create(createPostDto: CreatePostDto, user: Users): Promise<any> {
+    const post = new Posts();
     const { title, content } = createPostDto;
     post.title = title;
     post.content = content;

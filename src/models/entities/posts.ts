@@ -7,11 +7,11 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { UserEntity } from '../user';
+import { Users } from './users';
 
 @Entity({ name: 'posts' })
 @Index(['id'], { unique: true })
-export class PostEntity {
+export class Posts {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
@@ -27,6 +27,6 @@ export class PostEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => UserEntity, (user) => user.id)
-  user: UserEntity;
+  @ManyToOne(() => Users, (user) => user.id)
+  user: Users;
 }

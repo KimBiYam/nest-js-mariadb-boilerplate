@@ -9,7 +9,7 @@ import {
 
 @Entity({ name: 'users' })
 @Unique(['userId', 'email'])
-export class UserEntity {
+export class Users {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 

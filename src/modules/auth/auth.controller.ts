@@ -16,13 +16,14 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { UserEntity, UserService } from '../user';
+import { UserService } from '../user';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
 import { User, RequestUser } from '../../decorators/user.decorator';
 import { UpdatePasswordDto } from './dto/update-password.dto';
+import { Users } from 'src/models/entities';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -61,7 +62,7 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@RequestUser() requestUser: User): Promise<UserEntity> {
+  async getProfile(@RequestUser() requestUser: User): Promise<Users> {
     const { userId } = requestUser;
     const user = await this.userService.findOneByUserIdWithoutPassword(userId);
     if (!user) {

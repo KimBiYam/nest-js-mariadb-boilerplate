@@ -23,8 +23,8 @@ import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
 import { JwtAuthGuard } from '../auth';
 import { UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
-import { PostEntity } from './post.entity';
 import { PostService } from './post.service';
+import { Posts } from 'src/models/entities';
 
 @Controller('posts')
 @ApiTags('Post')
@@ -40,7 +40,7 @@ export class PostController {
   @Get()
   @ApiOperation({ summary: '전체 게시글 가져오기' })
   @ApiResponse({ status: 200, description: '게시글 가져오기 성공' })
-  async getPosts(): Promise<PostEntity[]> {
+  async getPosts(): Promise<Posts[]> {
     return await this.postService.findAll();
   }
 
@@ -67,7 +67,7 @@ export class PostController {
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: '특정 게시글 가져오기' })
   @ApiResponse({ status: 200, description: '특정 게시글 가져오기 성공' })
-  async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
+  async getPost(@Param('id', ParseIntPipe) id: number): Promise<Posts> {
     const post = await this.postService.findOneByPostId(id);
     if (!post) {
       this.logger.error('This post not exist');
