@@ -23,7 +23,7 @@ export class PostService {
     return await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
-      .select(['post', 'user.id', 'user.userId', 'user.name', 'user.email'])
+      .select(['post', 'user.name'])
       .getMany();
   }
 
@@ -31,7 +31,7 @@ export class PostService {
     return await this.postRepository
       .createQueryBuilder('post')
       .leftJoinAndSelect('post.user', 'user')
-      .select(['post', 'user.id', 'user.userId', 'user.name', 'user.email'])
+      .select(['post', 'user.name'])
       .where('post.id = :id', { id })
       .getOne();
   }
