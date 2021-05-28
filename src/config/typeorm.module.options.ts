@@ -12,4 +12,6 @@ export const ormModuleOptions: TypeOrmModuleOptions = {
   autoLoadEntities: true,
   synchronize: true,
   charset: process.env.DB_CHARSET,
+  keepConnectionAlive: true,
+  logging: true,
 };
