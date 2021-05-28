@@ -1,14 +1,12 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { AuthModule } from '../auth/auth.module';
-import { UserModule } from '../user';
+import { AuthModule } from './modules/auth/auth.module';
+import { UserModule } from './modules/user';
 import { APP_FILTER } from '@nestjs/core';
 import { configModuleOption, ormModuleOptions } from 'src/config/';
 import { ConfigModule } from '@nestjs/config';
 import { CustomExceptionFilter } from 'src/filters/custom-exception.filter';
-import { PostModule } from '../post';
+import { PostModule } from './modules/post';
 
 @Module({
   imports: [
@@ -18,10 +16,6 @@ import { PostModule } from '../post';
     PostModule,
     ConfigModule.forRoot(configModuleOption),
   ],
-  controllers: [AppController],
-  providers: [
-    AppService,
-    { provide: APP_FILTER, useClass: CustomExceptionFilter },
-  ],
+  providers: [{ provide: APP_FILTER, useClass: CustomExceptionFilter }],
 })
 export class AppModule {}

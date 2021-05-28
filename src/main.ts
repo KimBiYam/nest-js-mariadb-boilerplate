@@ -1,6 +1,6 @@
 import { ValidationPipe } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './modules/app/app.module';
+import { AppModule } from './app.module';
 import { setupSwagger } from './config';
 import { ConfigService } from '@nestjs/config';
 import LoggingInterceptor from './interceptors/logging.interceptor';
