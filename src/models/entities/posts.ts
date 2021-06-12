@@ -11,7 +11,6 @@ import {
 import { Users } from './users';
 
 @Entity({ name: 'posts' })
-@Index(['id'], { unique: true })
 export class Posts {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
@@ -22,6 +21,7 @@ export class Posts {
   @Column({ type: 'varchar' })
   content: string;
 
+  @Index()
   @CreateDateColumn()
   createdAt: Date;
 

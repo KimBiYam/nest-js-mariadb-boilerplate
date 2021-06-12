@@ -6,6 +6,7 @@ import {
   Unique,
   CreateDateColumn,
   OneToMany,
+  Index,
 } from 'typeorm';
 import { Posts } from './posts';
 
@@ -30,6 +31,7 @@ export class Users {
   })
   password: string;
 
+  @Index()
   @CreateDateColumn()
   createdAt: Date;
 
