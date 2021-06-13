@@ -1,39 +1,39 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Users } from 'src/models/entities';
+import { User } from '../../entities';
 import { DeleteResult, Repository, UpdateResult } from 'typeorm';
 import { RegsiterUserDto, UpdateUserDto } from '../auth';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(Users)
-    private readonly userRepository: Repository<Users>,
+    @InjectRepository(User)
+    private readonly userRepository: Repository<User>,
   ) {}
 
-  async findAll(): Promise<Users[]> {
+  async findAll(): Promise<User[]> {
     return await this.userRepository.find({
       select: ['userId', 'name', 'email', 'isActive', 'createdAt'],
     });
   }
 
-  async create(registerUserPayloadDto: RegsiterUserDto): Promise<Users> {
+  async create(registerUserPayloadDto: RegsiterUserDto): Promise<User> {
     return await this.userRepository.save(registerUserPayloadDto);
   }
 
-  async findOneById(id: number): Promise<Users> {
+  async findOneById(id: number): Promise<User> {
     const user = await this.userRepository.findOne(id);
     return user;
   }
 
-  async findOneByUserId(userId: string): Promise<Users> {
+  async findOneByUserId(userId: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { userId },
     });
     return user;
   }
 
-  async findOneByUserIdWithoutPassword(userId: string): Promise<Users> {
+  async findOneByUserIdExceptPassword(userId: string): Promise<User> {
     const user = await this.userRepository.findOne({
       where: { userId },
       select: ['id', 'userId', 'name', 'email', 'createdAt', 'isActive'],

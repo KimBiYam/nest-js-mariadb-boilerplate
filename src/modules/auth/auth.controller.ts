@@ -21,9 +21,9 @@ import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { RegsiterUserDto } from './dto/register-user.dto';
 import { JwtAuthGuard } from './jwt-auth.guard';
-import { User, RequestUser } from '../../decorators/user.decorator';
+import { RequestUser } from '../../decorators/user.decorator';
 import { UpdatePasswordDto } from './dto/update-password.dto';
-import { Users } from 'src/models/entities';
+import { User } from '../../entities';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -62,14 +62,13 @@ export class AuthController {
   @ApiOperation({ summary: '본인의 프로필 조회' })
   @ApiResponse({ status: 200, description: '프로필 조회 성공' })
   @UseGuards(JwtAuthGuard)
-  async getProfile(@RequestUser() requestUser: User): Promise<Users> {
+  async getProfile(@RequestUser() requestUser: User): Promise<User> {
     const { userId } = requestUser;
-    const user = await this.userService.findOneByUserIdWithoutPassword(userId);
+    const user = await this.userService.findOneByUserIdExceptPassword(userId);
     if (!user) {
       this.logger.error('This user not exist');
       throw new NotFoundException('This user not exist');
     }
-    delete user.password;
     return user;
   }
 

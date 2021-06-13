@@ -1,12 +1,11 @@
 import { NotFoundException } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
-import { User } from 'src/decorators';
 import { PostController, PostService } from '.';
-import { UserEntity, UserService } from '../user';
+import { UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
-import { Posts } from '../../entities/posts';
+import { User, Post } from '../../entities';
 
-const testUser: UserEntity = {
+const testUser: User = {
   id: 1,
   name: 'test',
   email: 'test@test.com',
@@ -14,9 +13,10 @@ const testUser: UserEntity = {
   userId: 'test',
   createdAt: new Date(),
   isActive: true,
+  posts: [],
 };
 
-const testPostEntity: Posts = {
+const testPostEntity: Post = {
   content: 'content',
   id: 1,
   title: 'title',
@@ -52,7 +52,9 @@ describe('PostController', () => {
             create: jest.fn(() => {
               return testPostEntity;
             }),
-            delete: jest.fn(() => {}),
+            delete: jest.fn(() => {
+              true;
+            }),
             update: jest.fn(({ content, title }: CreatePostDto, id: number) => {
               return { ...testPostEntity, id, content, title };
             }),
@@ -72,7 +74,7 @@ describe('PostController', () => {
   });
 
   it('should create a post', async () => {
-    const user: User = { userId: '1', username: 'userName' };
+    const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
     await postController.createPost(user, createPostDto);
@@ -82,7 +84,7 @@ describe('PostController', () => {
   });
 
   it('should throw NotFoundException', async () => {
-    const user: User = { userId: '1', username: 'userName' };
+    const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
     userSerivce.findOneByUserId = jest.fn(() => undefined);
@@ -116,7 +118,7 @@ describe('PostController', () => {
   });
 
   it('should update a post', async () => {
-    const user: User = { userId: '1', username: 'userName' };
+    const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'create', title: 'create' };
     const updatePostDto: CreatePostDto = {
       content: 'updated',
@@ -141,7 +143,7 @@ describe('PostController', () => {
   });
 
   it('should delete a post', async () => {
-    const user: User = { userId: '1', username: 'userName' };
+    const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'create', title: 'create' };
     const postId = 1;
 

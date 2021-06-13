@@ -3,7 +3,7 @@ import { UserService } from '../../modules/user';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from '../../util/hash-util';
 import { LoginDto } from './dto/login.dto';
-import { Users } from 'src/models/entities';
+import { User } from '../../entities';
 
 @Injectable()
 export class AuthService {
@@ -12,7 +12,7 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  async createToken(user: Users) {
+  async createToken(user: User) {
     return {
       accessToken: this.jwtService.sign({ id: user.userId }),
       user,

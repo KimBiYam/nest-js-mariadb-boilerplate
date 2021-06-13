@@ -1,3 +1,5 @@
+import { ApiProperty } from '@nestjs/swagger';
+import { IsString } from 'class-validator';
 import {
   Column,
   CreateDateColumn,
@@ -8,16 +10,20 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { Users } from './users';
+import { User } from './user';
 
-@Entity({ name: 'posts' })
-export class Posts {
+@Entity({ name: 'post' })
+export class Post {
   @PrimaryGeneratedColumn({ type: 'bigint' })
   id: number;
 
+  @ApiProperty({ example: '제목', description: '게시글 제목', required: true })
+  @IsString()
   @Column({ type: 'varchar' })
   title: string;
 
+  @ApiProperty({ example: '내용', description: '게시글 내용', required: true })
+  @IsString()
   @Column({ type: 'varchar' })
   content: string;
 
@@ -28,7 +34,7 @@ export class Posts {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @ManyToOne(() => Users, (user) => user.id)
+  @ManyToOne(() => User, (user) => user.id)
   @JoinColumn([{ name: 'userId', referencedColumnName: 'id' }])
-  user: Users;
+  user: User;
 }

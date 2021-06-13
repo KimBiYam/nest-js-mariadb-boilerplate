@@ -18,13 +18,13 @@ import {
   ApiResponse,
   ApiTags,
 } from '@nestjs/swagger';
-import { User, RequestUser } from '../../decorators';
+import { RequestUser } from '../../decorators';
 import { DeleteResult, InsertResult, UpdateResult } from 'typeorm';
-import { JwtAuthGuard } from '../auth';
+import { JwtAuthGuard, RequestUserDto } from '../auth';
 import { UserService } from '../user';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostService } from './post.service';
-import { Posts } from 'src/models/entities';
+import { Post as PostEntity } from 'src/entities';
 
 @Controller('posts')
 @ApiTags('Post')
@@ -40,7 +40,7 @@ export class PostController {
   @Get()
   @ApiOperation({ summary: '전체 게시글 가져오기' })
   @ApiResponse({ status: 200, description: '게시글 가져오기 성공' })
-  async getPosts(): Promise<Posts[]> {
+  async getPosts(): Promise<PostEntity[]> {
     return await this.postService.findAll();
   }
 
@@ -50,7 +50,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 작성' })
   @ApiResponse({ status: 201, description: '게시글 작성 성공' })
   async createPost(
-    @RequestUser() requestUser: User,
+    @RequestUser() requestUser: RequestUserDto,
     @Body() createPostDto: CreatePostDto,
   ): Promise<InsertResult> {
     const { userId } = requestUser;
@@ -67,7 +67,7 @@ export class PostController {
   @ApiParam({ name: 'id' })
   @ApiOperation({ summary: '특정 게시글 가져오기' })
   @ApiResponse({ status: 200, description: '특정 게시글 가져오기 성공' })
-  async getPost(@Param('id', ParseIntPipe) id: number): Promise<Posts> {
+  async getPost(@Param('id', ParseIntPipe) id: number): Promise<PostEntity> {
     const post = await this.postService.findOneByPostId(id);
     if (!post) {
       this.logger.error('This post not exist');
@@ -83,7 +83,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 내용 수정' })
   @ApiResponse({ status: 200, description: '게시글 내용 수정 성공' })
   async updatePost(
-    @RequestUser() requestUser: User,
+    @RequestUser() requestUser: RequestUserDto,
     @Param('id', ParseIntPipe) id: number,
     @Body() createPostDto: CreatePostDto,
   ): Promise<UpdateResult> {
@@ -99,7 +99,7 @@ export class PostController {
   @ApiOperation({ summary: '게시글 삭제' })
   @ApiResponse({ status: 200, description: '게시글 삭제 성공' })
   async deletePost(
-    @RequestUser() requestUser: User,
+    @RequestUser() requestUser: RequestUserDto,
     @Param('id', ParseIntPipe) id: number,
   ): Promise<DeleteResult> {
     const { userId } = requestUser;

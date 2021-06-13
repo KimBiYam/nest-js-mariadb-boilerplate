@@ -1,13 +1,14 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { getRepositoryToken } from '@nestjs/typeorm';
+import { Post, User } from '../../entities';
 import { Repository } from 'typeorm';
-import { UserEntity, UserService } from '../user';
-import { Posts, PostService } from './';
+import { UserService } from '../user';
+import { PostService } from './';
 import { CreatePostDto } from './dto/create-post.dto';
 
 type MockRepository<T = any> = Partial<Record<keyof Repository<T>, jest.Mock>>;
 
-const testUser: UserEntity = {
+const testUser: User = {
   id: 0,
   name: 'test',
   email: 'test@test.com',
@@ -15,9 +16,10 @@ const testUser: UserEntity = {
   userId: 'test',
   createdAt: new Date(),
   isActive: true,
+  posts: [],
 };
 
-const testPostEntity: Posts = {
+const testPostEntity: Post = {
   content: 'content',
   id: 1,
   title: 'title',
@@ -28,15 +30,14 @@ const testPostEntity: Posts = {
 
 describe('PostService', () => {
   let postService: PostService;
-  let userService: UserService;
-  let postRepository: MockRepository<Posts>;
+  let postRepository: MockRepository<Post>;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
       providers: [
         PostService,
         {
-          provide: getRepositoryToken(Posts),
+          provide: getRepositoryToken(Post),
           useValue: {
             save: jest.fn(),
             create: jest.fn(),
@@ -54,8 +55,7 @@ describe('PostService', () => {
     }).compile();
 
     postService = module.get<PostService>(PostService);
-    userService = module.get<UserService>(UserService);
-    postRepository = module.get(getRepositoryToken(Posts));
+    postRepository = module.get(getRepositoryToken(Post));
   });
 
   it('should be defined', () => {
