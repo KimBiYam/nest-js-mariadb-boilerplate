@@ -26,6 +26,14 @@ Docker version 19.03.13, build 4484c46d9d
 docker-compose version 1.26.2, build eefe0d31
 ```
 
+## Environments
+
+환경변수 설정을 위해 env 파일이 필요<br>
+.env.sample 과 .env-dev.sample 파일을 참고하여 설정
+
+- Devlopment Mode : .env-dev
+- Production Mode : .env
+
 ## Run
 
 ## Devlopment Mode
