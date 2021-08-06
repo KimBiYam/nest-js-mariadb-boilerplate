@@ -18,9 +18,7 @@ describe('AuthController', () => {
         AuthService,
         {
           provide: UserService,
-          useValue: {
-            getElasticSearchData: jest.fn(),
-          },
+          useValue: {},
         },
       ],
       controllers: [AuthController],

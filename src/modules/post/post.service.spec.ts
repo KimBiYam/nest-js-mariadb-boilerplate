@@ -63,11 +63,13 @@ describe('PostService', () => {
   });
 
   it('should create post', async () => {
+    // given
     const createPostDto: CreatePostDto = {
       content: 'content',
       title: 'title',
     };
 
+    // when
     postRepository.createQueryBuilder = jest.fn(() => ({
       leftJoinAndSelect: jest.fn().mockReturnThis(),
       select: jest.fn().mockReturnThis(),
@@ -77,10 +79,12 @@ describe('PostService', () => {
     await postService.create(createPostDto, testUser);
     const result = await postService.findAll();
 
+    // then
     expect(result[0].content).toEqual(createPostDto.content);
   });
 
   it('should find one by postId', async () => {
+    // given
     const postId = 1;
     const createPostDto: CreatePostDto = {
       content: 'content',
@@ -94,13 +98,16 @@ describe('PostService', () => {
       getOne: jest.fn().mockReturnValue(testPostEntity),
     }));
 
+    // when
     await postService.create(createPostDto, testUser);
     const result = await postService.findOneByPostId(postId);
 
+    // then
     expect(result.content).toEqual(createPostDto.content);
   });
 
   it('should validate post user', async () => {
+    // given
     const userId = '0';
     const postId = 1;
 
@@ -111,6 +118,10 @@ describe('PostService', () => {
       getOne: jest.fn().mockReturnValue(testPostEntity),
     }));
 
-    await postService.validatePostUser(userId, postId);
+    // when
+    const result = await postService.validatePostUser(userId, postId);
+
+    // then
+    expect(result).toEqual(true);
   });
 });

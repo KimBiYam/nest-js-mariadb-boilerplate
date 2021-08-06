@@ -17,9 +17,7 @@ describe('AuthService', () => {
         AuthService,
         {
           provide: UserService,
-          useValue: {
-            getElasticSearchData: jest.fn(),
-          },
+          useValue: {},
         },
       ],
     }).compile();

@@ -74,20 +74,27 @@ describe('PostController', () => {
   });
 
   it('should create a post', async () => {
+    // given
     const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
+    // when
     await postController.createPost(user, createPostDto);
     const result = await postController.getPosts();
 
+    // then
     expect(result[0].id).toEqual(1);
   });
 
   it('should throw NotFoundException', async () => {
+    // given
     const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'content', title: 'title' };
 
+    // when
     userSerivce.findOneByUserId = jest.fn(() => undefined);
+
+    // then
     expect(
       async () => await postController.createPost(user, createPostDto),
     ).rejects.toThrowError(NotFoundException);
@@ -100,24 +107,31 @@ describe('PostController', () => {
   });
 
   it('should get a post', async () => {
+    // given
     const postId = 1;
 
+    // when
     const result = await postController.getPost(postId);
 
+    // then
     expect(result.id).toEqual(postId);
   });
 
   it('should throw NotFoundException', async () => {
+    // given
     const postId = 100;
 
+    // when
     postService.findOneByPostId = jest.fn(() => undefined);
 
+    // then
     expect(
       async () => await postController.getPost(postId),
     ).rejects.toThrowError(NotFoundException);
   });
 
   it('should update a post', async () => {
+    // given
     const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'create', title: 'create' };
     const updatePostDto: CreatePostDto = {
@@ -126,6 +140,7 @@ describe('PostController', () => {
     };
     const postId = 1;
 
+    // when
     postService.findOneByPostId = jest.fn(async (id: number) => {
       return {
         ...testPostEntity,
@@ -139,19 +154,24 @@ describe('PostController', () => {
     await postController.updatePost(user, postId, updatePostDto);
     const result = await postController.getPost(postId);
 
+    // then
     expect(result.content).toEqual(updatePostDto.content);
   });
 
   it('should delete a post', async () => {
+    //given
     const user: User = testUser;
     const createPostDto: CreatePostDto = { content: 'create', title: 'create' };
     const postId = 1;
 
+    // when
     await postController.createPost(user, createPostDto);
     await postController.deletePost(user, postId);
     postService.findAll = jest.fn(async () => []);
 
     const result = await postController.getPosts();
+
+    // then
     expect(result.length).toEqual(0);
   });
 });

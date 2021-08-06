@@ -39,39 +39,51 @@ describe('UserService', () => {
   });
 
   it('create', async () => {
+    // given
     jest.spyOn(userRepository, 'save').mockResolvedValueOnce(testUser);
 
+    // when
     const user = await service.create(testUser);
 
+    // then
     expect(user).toEqual(testUser);
     expect(userRepository.save).toBeCalled();
   });
 
   it('findAll', async () => {
+    // given
     jest.spyOn(userRepository, 'find').mockResolvedValueOnce([testUser]);
 
+    // when
     const users = await service.findAll();
 
+    // then
     expect(users).toEqual([testUser]);
     expect(userRepository.find).toBeCalled();
   });
 
   it('findOneById', async () => {
+    // given
     const { id } = testUser;
     jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(testUser);
 
+    // when
     const user = await service.findOneById(id);
 
+    // then
     expect(user).toEqual(testUser);
     expect(userRepository.findOne).toBeCalled();
   });
 
   it('findOneByUserId', async () => {
+    // given
     const { userId } = testUser;
     jest.spyOn(userRepository, 'findOne').mockResolvedValueOnce(testUser);
 
+    // when
     const user = await service.findOneByUserId(userId);
 
+    // then
     expect(user).toEqual(testUser);
     expect(userRepository.findOne).toBeCalled();
   });
