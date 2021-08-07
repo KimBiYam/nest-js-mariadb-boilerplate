@@ -30,10 +30,7 @@ describe('AuthController', () => {
         },
         {
           provide: UserService,
-          useValue: {
-            // findOneByUserId: jest.fn(),
-            // create: jest.fn(),
-          },
+          useValue: {},
         },
       ],
       controllers: [AuthController],

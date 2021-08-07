@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  Injectable,
-  NotFoundException,
-} from '@nestjs/common';
+import { BadRequestException, Injectable } from '@nestjs/common';
 import { UserService } from '../../modules/user';
 import { JwtService } from '@nestjs/jwt';
 import { HashUtil } from '../../util/hash-util';
@@ -25,18 +21,18 @@ export class AuthService {
 
   async login(loginDto: LoginDto) {
     const { userId, password } = loginDto;
-    const user = await this.validateUser(userId, password);
-    return user;
+    const user = await this.userService.findOneByUserId(userId);
+
+    if (this.validateUser(password, user.password)) {
+      return user;
+    }
   }
 
-  async validateUser(userId: string, password: string): Promise<any> {
-    const user = await this.userService.findOneByUserId(userId);
-    if (!user) {
-      throw new NotFoundException('User not exist');
-    }
-    if (!HashUtil.compare(password, user.password)) {
+  async validateUser(password: string, userPassword: string) {
+    if (!HashUtil.compare(password, userPassword)) {
       throw new BadRequestException('Password not match');
     }
-    return user;
+
+    return true;
   }
 }
