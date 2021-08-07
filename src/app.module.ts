@@ -5,6 +5,8 @@ import { UserModule } from './modules/user';
 import { configModuleOption, typeormConfig } from 'src/config/';
 import { ConfigModule } from '@nestjs/config';
 import { PostModule } from './modules/post';
+import { APP_FILTER } from '@nestjs/core';
+import { OrmExceptionFilter } from './filters/orm-exception-filter';
 
 @Module({
   imports: [
@@ -14,6 +16,6 @@ import { PostModule } from './modules/post';
     PostModule,
     ConfigModule.forRoot(configModuleOption),
   ],
-  providers: [],
+  providers: [{ provide: APP_FILTER, useClass: OrmExceptionFilter }],
 })
 export class AppModule {}
