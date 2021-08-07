@@ -6,7 +6,6 @@ import { AuthService } from './auth.service';
 import faker from 'faker';
 import { User } from 'src/entities';
 import { BadRequestException, NotFoundException } from '@nestjs/common';
-import { UpdateResult } from 'typeorm';
 
 describe('AuthController', () => {
   let controller: AuthController;
@@ -248,6 +247,35 @@ describe('AuthController', () => {
 
       // then
       expect(result.password).toEqual(newPassword);
+    });
+  });
+
+  describe('signOut', () => {
+    it('should success sign out', async () => {
+      // given
+      const sampleUser: User = {
+        userId: faker.internet.userName(),
+        password: faker.internet.password(),
+        createdAt: faker.datatype.datetime(),
+        email: faker.internet.email(),
+        id: faker.datatype.number(),
+        isActive: true,
+        name: faker.internet.userName(),
+        posts: [],
+      };
+
+      userService.remove = jest.fn().mockResolvedValue({});
+      userService.findOneByUserIdExceptPassword = jest
+        .fn()
+        .mockResolvedValue(undefined);
+
+      // when
+      await controller.signOut(sampleUser);
+
+      const result = controller.getProfile(sampleUser);
+
+      // then
+      await expect(result).rejects.toThrowError(NotFoundException);
     });
   });
 });
